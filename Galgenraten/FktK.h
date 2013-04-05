@@ -6,7 +6,7 @@
 // ''''''''''''''''''''''''''''''''''''''
 
 int char2intZahlenTasten(char c);	// zu einer Zahlentaste das entsprechende int zurückgeben
-int iPos (int Zahl);				// Integer postiv machen
+int intPositiv (int Zahl);				// Integer postiv machen
 int Zufall(int max);					// Zufallszahl zwischen 0 und max
 char Taste(int debug);							// Gibt Tastendruck zurück							
 char* charsKlein(char Zeichen[]);				// gibt einen Buchstaben kleingeschrieben zurück

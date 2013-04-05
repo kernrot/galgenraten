@@ -12,7 +12,7 @@ void DispGewonnen(int Fehler ,char Wort[], int debug);			// Bildschirm "Gewonnen
 void DispVerloren(int Fehler ,char Wort[], int debug);			// Bildschirm "Verloren"
 void DispWortlistenEingabe(int debug);							// Bildschrim für eigene Wortliste
 void DispProtokollEingabe(int debug);							// Bildschrim für anderes Protokoll
-
+void DispProtokollSpeichern(int debug);							// Bildschrim um Protokoll zu speichern
 
 void teilGalgen(int Fehler);		// Galgen und Männlein zeichen
 void teilTitel(int debug);			// Titelzeile ausgeben

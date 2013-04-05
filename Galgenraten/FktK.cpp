@@ -21,7 +21,7 @@ int char2intZahlenTasten(char c) {
 	return i;
 }
  
-int iPos(int i) {
+int intPositiv(int i) {
 	// Integer postiv machen
 	if (i<0) i=i*-1;
 	return i;

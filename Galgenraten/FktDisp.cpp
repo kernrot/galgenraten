@@ -15,14 +15,16 @@ void DispHauptmenu(int Gk, int d){
                                             
 	printf("\n");	
 	printf("\tHauptmenu\n\n");	
-	printf("\t(s) Neues Spiel starten.\n");	
+	printf("\t(n) Neues Spiel starten.\n\n");
 	printf("\t(a) Anzeigen aller geratenen W\224rter.\n");	
-	printf("\t(v) Anzeigen eines Rateverlaufs.\n");	
+	printf("\t(v) Anzeigen eines Rateverlaufs.\n");
+	printf("\t(l) L\224schen eines Rateverlaufs.\n\n");
 	printf("\t(w) Wortliste einlesen.\n");	
-	printf("\t(p) Protokoll laden.\n");	
-	printf("\t(g) Gro\341/Kleinschreibung "); 	if(Gk==1) { printf("[Aus]\n"); } if(Gk==-1) { printf("[Ein]\n"); }
+	printf("\t(p) Protokoll laden.\n");
+	printf("\t(s) Protokoll speichern unter..\n\n");
+	printf("\t(g) Gro\341/Kleinschreibung "); 	if(Gk==1) { printf("[Aus]\n\n"); } if(Gk==-1) { printf("[Ein]\n\n"); }
 	printf("\t(b) Beenden.\n");	
-	printf("\n\n\t(Auswaehlen mit Tastendruck)\n");	
+	printf("\n\n\t(Ausw\204hlen mit Tastendruck)\n");	
 	return;
 }
 
@@ -109,6 +111,14 @@ void DispProtokollEingabe(int d){
 	return;
 }
 
+void DispProtokollSpeichern(int d){
+	//Bildschrim für anderes Protokoll
+	teilTitel(d);
+	printf("\n");	
+	printf("\tProtokoll speichern\n\n");	
+	printf("\tBitte den Zieldateinamen des Protokolls eingeben\n\t(\"*.log\" mit Enter bestätigen.)\n\n\n");	
+	return;
+}
 
 void teilWort(char Wort[], char Zeichen[]){
 	//Gibt die bisher erratenen Zeichen (in Zeichen) des Worts (in Wort) aus

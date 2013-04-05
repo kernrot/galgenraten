@@ -10,28 +10,6 @@
 #include "FktProtokoll.h"	//Funktionen für TippProtokoll
 #include "FktWoerterbuch.h" //Funktionen für das Wörterbuch
 
-void maina(){
-	while(true) Taste(1);
-}
-
-void mainb(){
-	int d = 0;
-	struct WProtokoll *Protokoll;		// WProtokolldatei
-	struct TProtokoll *tProtokoll;		// TProtokolldatei
-	Protokoll = (struct WProtokoll*) calloc(1,sizeof(*Protokoll));
-	tProtokoll = (struct TProtokoll*) calloc(1,sizeof(*tProtokoll));
-
-
-	Protokoll = &lesenWProtokoll("protokoll.log",d);
-	tProtokoll = Protokoll->TippProtokoll;
-	//entferneTProtokoll(&tProtokoll);
-	//entferneWProtokoll(&Protokoll);
-	//printWProtokoll(&Protokoll,d);
-	speichernWProtokoll(&Protokoll, "protokoll3.log",d);
-	printf("%d", anzWProtokoll(&Protokoll,d));
-	Taste(d);
-}
-
 void main(){
 	int d = 0;
 	
@@ -59,7 +37,7 @@ void main(){
 
 		switch (Taste(d)){									// weiter je nach Tastendruck
 
-			case 's':	if(d)printf("Debug: neues Spiel.\n");
+			case 'n':	if(d)printf("Debug: neues Spiel.\n");
 				
 				WahlTaste = ' ';
 				while (WahlTaste == ' '){					// Schleife solange nach dem Spiel Leertaste gedrückt -> neues Spiel starten
@@ -68,7 +46,7 @@ void main(){
 					//if (TippProtokoll) memset(TippProtokoll,0,sizeof(*TippProtokoll));
 					TippProtokoll->Nummer = 0;	
 				
-					*TippProtokoll = neuGalgen(Woerter, TippProtokoll, GrossKlein, anzWProtokoll(&WortProtokoll,d)+1, d);				//neues Spiel
+					*TippProtokoll = neuGalgen(Woerter, TippProtokoll, GrossKlein, (&letztesWProtokoll(&WortProtokoll,d))->Nummer+1, d);				//neues Spiel
 				
 					if (TippProtokoll->Nummer != NULL){
 						hinzuWProtokoll(&WortProtokoll,&TippProtokoll,d);									//nach Spiel TippProtokoll zum WortProtokoll hinzufügen
@@ -92,22 +70,31 @@ void main(){
 			case 'p':	if(d)printf("Debug: ein anderes Protokoll laden\n"); 
 				WortProtokoll = &eigenesWProtokoll(d);	break;							//anderes Protokoll
 			
+			case 's':	if(d)printf("Debug: Protokoll speichern unter\n"); 
+			    eignesSpeicherzielWProtokoll(WortProtokoll,d);	break;							//anderes Protokoll
 
 			case 'g':	if(d)printf("Debug: Gro%c/Kleinschreibung umschaltet\n", unsigned char(225)); 
 				GrossKlein=GrossKlein*-1; break;				//GK umschalten
 			
 			case 'b':	if(d)printf("Debug: Ende des Programms\n"); 
 				beenden=1;
-				speichernWProtokoll(&WortProtokoll, "protokoll.log" ,d);	//Protokoll speichern
 				break;								//Ende
+
+			case 27:	if(d)printf("Debug: Ende des Programms (Esc)\n"); 
+				beenden=1;
+				break;								//Ende (Esc-Taste)
 			
-			case 'a':	if(d)printf("Debug: geratene Woerter anzeigen\n"); 
+			case 'a':	if(d)printf("Debug: geratene W\224rter anzeigen\n"); 
 				anzeigenWoerter(WortProtokoll,d);		//Wortprotokoll anzeigen
 				break;								
 
 			case 'v':	if(d)printf("Debug: Ratevorgang anzeigen\n"); 
-				anzeigenVerlauf(WortProtokoll,d);		//Rateverlauf anzeigen
-				break;								
+				anzeigenTippVerlauf(WortProtokoll,d);		//Rateverlauf anzeigen
+				break;
+
+			case 'l':	if(d)printf("Debug: Ratevorgang l\224schen\n");
+				*WortProtokoll = loeschenTippVerlauf(WortProtokoll,d);		//Rateverlauf anzeigen
+				break;	
 
 			case 'd':	if(d){d=NULL;}else{d=1;} if(d)printf("\n\nDebuginganzeige umgeschaltet\n\n"); break;	
 			
@@ -116,7 +103,10 @@ void main(){
 	}
 	if(d){printWProtokoll(&WortProtokoll,d); Taste(d);}
 
-	free(Woerter);			// genutzte Speicherbereiche freigeben
+	//speichernWProtokoll(&WortProtokoll, "protokoll.log" ,d);	//Protokoll speichern
+	eignesSpeicherzielWProtokoll(WortProtokoll,d); // mit Dateinamenswahl
+
+	free(Woerter);			// genutzten Speicherbereich freigeben
 	free(WortProtokoll);
 
 	return;

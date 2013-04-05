@@ -35,9 +35,12 @@ struct WProtokoll {		// WortProtkoll
 
 struct WProtokoll hinzuWProtokoll(struct WProtokoll **WoerterProtokoll, struct TProtokoll **anzuhängendesTippProtokoll, int debug);	// ein TippProtokoll zum WortProtokoll hinzufügen, gibt das hinzugefügte zurück
 struct WProtokoll entferneWProtokoll(struct WProtokoll **WoerterProtokoll, int debug);		// entfernt das letzte Element aus der Liste gibt Liste zurück
+struct WProtokoll entferneWProtokollNummer(struct WProtokoll **WoerterProtokoll, int Nummer, int debug);		// entfernt das Element mit der entsp. Nummer aus der Liste gibt Liste zurück
 struct WProtokoll lesenWProtokoll(char* pfad, int debug);									// WProtokoll aus binärdatei lesen
+struct WProtokoll letztesWProtokoll(struct WProtokoll **WPr, int d);							// gibt das letzte Element des WProtokolls zurück
 
-int anzWProtokoll(struct WProtokoll **lst, int debug);										// Anzahl der TippProtokolle in einem WortProtokoll
+int OLDanzWProtokoll(struct WProtokoll **lst, int debug);										// Anzahl der TippProtokolle in einem WortProtokoll
+int isInWProtokoll(struct WProtokoll **lst, int num, int d);								// prüft ob TippProtokoll mit laufender Nummer im Wortprotokoll vorhanden ist, return 1 für vorhanden, 0 für nicht
 
 void speichernWProtokoll(struct WProtokoll **s, char* pfad, int debug);						// WProtokoll nach pfad binär speichern
 void printWProtokoll(struct WProtokoll **WortProtokoll, int debug);							// printTProtokoll für alle TippProtokolle in einem WortProtokoll

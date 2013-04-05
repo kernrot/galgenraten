@@ -135,7 +135,40 @@ struct WProtokoll entferneWProtokoll(struct WProtokoll **lst, int d) {
     }
 	return **lst;
 }
-int anzWProtokoll(struct WProtokoll **lst, int d) {
+
+struct WProtokoll entferneWProtokollNummer(struct WProtokoll **lst, int Nummer, int d) {
+	// entfernt das Element mit der entsp. Nummer aus der Liste gibt Liste zurück
+
+    struct WProtokoll *List_lauf = *lst;						// Startelement der Liste
+	
+    if ( List_lauf->Nummer != NULL ) {							// sind Elemente vorhanden
+        while (List_lauf->next != NULL && intPositiv(List_lauf->Nummer) != Nummer)	{	// suche passendes Element	
+			*List_lauf=*List_lauf->next;
+		}
+
+		if (intPositiv(List_lauf->Nummer) == Nummer) {								// prüfen ob Nummer korrekt
+			
+			struct WProtokoll *ePrev = List_lauf->prev;
+			struct WProtokoll *eNext = List_lauf->next;
+			ePrev->next = List_lauf->next;					// Folgeelement des Vorgängers
+			eNext->prev = List_lauf->prev;					// Vorgängerelement des Nachfolgers
+			while (List_lauf->prev != NULL) {				// Zurück zum ersten listenelement
+				*List_lauf=*List_lauf->prev;
+			}												// Element selbst freigeben
+
+			printf("Debug: Element Nummer %d entfernt.\n", Nummer);
+		
+		} else {
+			printf("Debug: Element Nummer %d nicht vorhanden.\n", Nummer);
+		}
+		
+    }
+	return **lst;
+}
+
+
+
+int OLDanzWProtokoll(struct WProtokoll **lst, int d) {
 	// Anzahl der TippProtokolle in einem WortProtokoll
 
     struct WProtokoll *List_lauf = *lst;						// Startelement der Liste
@@ -150,6 +183,36 @@ int anzWProtokoll(struct WProtokoll **lst, int d) {
     }
 	return anz;
 }
+
+struct WProtokoll letztesWProtokoll(struct WProtokoll **WPr, int d){
+	// gibt das letzte Element des WProtokolls zurück
+	struct WProtokoll *List_lauf = *WPr;
+	while (List_lauf->next != NULL) {
+		List_lauf = List_lauf->next;
+	}
+	return *List_lauf;
+}
+
+
+
+int isInWProtokoll(struct WProtokoll **lst, int num, int d) {
+	// prüft ob TippProtokoll mit laufender Nummer im Wortprotokoll vorhanden ist, return 1 für vorhanden, 0 für nicht
+
+	struct WProtokoll *List_lauf = *lst;						// Startelement der Liste
+	int vorh = 0;
+
+    if ( List_lauf->Nummer != NULL ) {							// sind Elemente vorhanden
+        while (List_lauf->next != NULL && vorh == 0 )	{					// suche das letzte Element							
+			if (num == intPositiv(List_lauf->Nummer)){ 
+				vorh=1;													// wenn nummer des aktuellen Elements gleich der gesuchen
+			}
+			List_lauf=List_lauf->next;							//nächstes Element
+		}
+		if (intPositiv(List_lauf->Nummer) == num) vorh=1;		//letztes Element auch noch testen
+    }
+	return vorh;
+}
+
 
 void printWProtokoll(struct WProtokoll **lst, int d) {
 	// printTProtokoll für alle TippProtokolle in einem WortProtokoll
@@ -181,12 +244,12 @@ void printWProtokollEinzelwoerter(struct WProtokoll **lst, int numMarkiert, int 
 	char m;
 
     if ( List_lauf->Nummer != NULL ) {			// sind Elemente vorhanden
-		if  (iPos(List_lauf->TippProtokoll->Nummer) == numMarkiert) { m = '>'; } else { m = ' '; }
-		printf("\t%c %d\t %s\n",m , iPos(List_lauf->TippProtokoll->Nummer) , List_lauf->TippProtokoll->Suchwort);
+		if  (intPositiv(List_lauf->TippProtokoll->Nummer) == numMarkiert) { m = '>'; } else { m = ' '; }
+		printf("\t%c %d\t %s\n",m , intPositiv(List_lauf->TippProtokoll->Nummer) , List_lauf->TippProtokoll->Suchwort);
 		while (List_lauf->next != NULL )	{					// gehe bis letztes Element						
 			List_lauf= List_lauf->next;
-			if  (iPos(List_lauf->TippProtokoll->Nummer) == numMarkiert) { m = '>'; } else { m = ' '; }
-			printf("\t%c %d\t %s\n", m, iPos(List_lauf->TippProtokoll->Nummer) , List_lauf->TippProtokoll->Suchwort);
+			if  (intPositiv(List_lauf->TippProtokoll->Nummer) == numMarkiert) { m = '>'; } else { m = ' '; }
+			printf("\t%c %d\t %s\n", m, intPositiv(List_lauf->TippProtokoll->Nummer) , List_lauf->TippProtokoll->Suchwort);
 		}
     }
 	else
@@ -255,7 +318,7 @@ struct WProtokoll lesenWProtokoll(char* pfad, int d) {
 }
 
 void speichernWProtokoll(struct WProtokoll **s, char* pfad, int d) {
-	// WProtokoll nach pfad binär speichern
+	// WProtokoll nach pfad binär speichern 
 
 	struct WProtokoll *ListW_lauf = *s;						//erster WortlistenEintrag
 	struct TProtokoll *ListT_lauf = ListW_lauf->TippProtokoll;	//erster TippProtokollEintrag
