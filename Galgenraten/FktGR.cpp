@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <Windows.h>	// nur für Sleep()
+//#include <Windows.h>	// nur für Sleep()
 
 #include "FktDisp.h"	//Bildschirmanzeigen für Galgenraten
 #include "FktGR.h"		//Funktionen für Galgenraten
@@ -49,7 +49,7 @@ struct TProtokoll neuGalgen(struct wort *Wortliste, struct TProtokoll *Pr, int G
 			// ''''''''''''''''''''''''''''''''''''''
 			
 		if (tmpTaste[0] == 60) {
-			// eine Eingabe Löschen (Taste < = 60)
+			// eine Eingabe Löschen (Taste "<" = 60)
 			if (lenWort(Eingabe) != 0) {						// falls mindestens ein Buchstabe geraten
 				Eingabe[lenWort(Eingabe)-1] = '\0';				// letzten Buchstaben in Eingabe entfernen
 				entferneTProtokoll(&Pr,d);						// letzten TippProtokolleintrag entfernen
@@ -83,14 +83,14 @@ struct TProtokoll neuGalgen(struct wort *Wortliste, struct TProtokoll *Pr, int G
 }
  
 void anzeigenWoerter(struct WProtokoll *WPr, int d){
-	system("CLS");
+	// gibt alle bisher im Protokoll enthaltenen Wörter aus
 	teilTitel(d);
 	printf("\n\t\tAnzeigen aller im Protokoll vorhandenen W\224erter\n");
 	printWProtokoll(&WPr,d);
 }
 
 void anzeigenTippVerlauf(struct WProtokoll *WPr, int d){
-	
+	// lässt den Anwender ein Wort aus dem WPr auswählen und zeigt dann den Tippverlauf für dieses
 	int WortNummer, firstWortNummer, lastWortNummer;
 	
 	WortNummer = firstWortNummer = intPositiv(WPr->TippProtokoll->Nummer);	// Indexnummer des ersten elements bestimmen
@@ -200,29 +200,29 @@ struct WProtokoll loeschenTippVerlauf(struct WProtokoll *WPr, int d){
 }
 
 void abspielenTippVerlauf(struct TProtokoll *TPr, int d){
-	
+	// Zeigt den TippVerlauf eines Wortes (TPr)
 	struct TProtokoll *lauf = TPr;						// Startelement der Liste
 	char Eingabe[28] = {};
 	char Suchwort[28] = {};
 	int Fehler = 0;
 	int Gk=0;
 
-	if (lauf->next != NULL){
-		if(lauf->Nummer<0){	Gk = 1; }
-		strcpy(Suchwort,lauf->Suchwort);
-		while (lauf->next != NULL) {
-			strcat(Eingabe,lauf->Eingabe);
-			DispRatenVerlauf(unbenutzteZeichen(charsGK(Suchwort,Gk), charsGK(Eingabe,Gk)),lauf->Suchwort,Eingabe,d);
-			lauf = lauf->next;
+	if (lauf->next != NULL){						// falls wort nicht leer
+		if(lauf->Nummer<0){	Gk = 1; }				// GroßKlein beachten?
+		strcpy(Suchwort,lauf->Suchwort);			// Suchwort aus dem Tippprotokoll kopieren
+		while (lauf->next != NULL) {				// Solange weiterer Tipp im TippProtokoll
+			strcat(Eingabe,lauf->Eingabe);			// Zur Einhabe hinzu
+			DispRatenVerlauf(unbenutzteZeichen(charsGK(Suchwort,Gk), charsGK(Eingabe,Gk)),lauf->Suchwort,Eingabe,d);	// Bildschirm zeichnen
+			lauf = lauf->next;						// zum nächsten buchstaben
 			if (Taste(d) == '\r') {
 				return;
 			}
 		}
-		strcat(Eingabe,lauf->Eingabe);
-		if (unbenutzteZeichen(charsGK(Suchwort,Gk), charsGK(Eingabe,Gk)) < 10 ){
-			DispGewonnen(unbenutzteZeichen(charsGK(Suchwort,Gk), charsGK(Eingabe,Gk)),Suchwort,d);
+		strcat(Eingabe,lauf->Eingabe);				// letzter Tipp
+		if (unbenutzteZeichen(charsGK(Suchwort,Gk), charsGK(Eingabe,Gk)) < 10 ){	// Gewonnen/Verloren anhand der gemachten Fehler
+			DispGewonnen(unbenutzteZeichen(charsGK(Suchwort,Gk), charsGK(Eingabe,Gk)),Suchwort,d);	// Schlussbildschrim Gewonnen
 		} else {
-			DispVerloren(unbenutzteZeichen(charsGK(Suchwort,Gk), charsGK(Eingabe,Gk)),Suchwort,d);
+			DispVerloren(unbenutzteZeichen(charsGK(Suchwort,Gk), charsGK(Eingabe,Gk)),Suchwort,d);  // Schlussbildschrim Gewonnen
 		}
 		printf("\n\t(Enter) zum Hauptmenu zur\201ck zu kehren");
 		char WahlTaste = 0;
@@ -236,7 +236,7 @@ void abspielenTippVerlauf(struct TProtokoll *TPr, int d){
 
 
 struct wort eigeneWortliste(int d){
-	
+	// laden einer eigenen Wortliste, gibt diese zurück
 	char Pfad[256] = {};
 	DispWortlistenEingabe(d);
 	
@@ -247,7 +247,7 @@ struct wort eigeneWortliste(int d){
 }
 
 struct WProtokoll eigenesWProtokoll(int d){
-	
+	// laden eines eigenen Protokolls, gibt dieses zurück
 	char Pfad[256] = {};
 	DispProtokollEingabe(d);
 	
@@ -258,7 +258,7 @@ struct WProtokoll eigenesWProtokoll(int d){
 }
 
 void eignesSpeicherzielWProtokoll(struct WProtokoll *WPr, int d){
-
+	// Speichern eines WortProtokolls mit wählbarem Dateiname
 	char Pfad[256] = {};
 	DispProtokollSpeichern(d);
 	
