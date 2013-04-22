@@ -75,6 +75,7 @@ void printTProtokoll (struct TProtokoll **lst, int d) {
 
 		printf("\nNr. %d\t\t      Suchwort \302 Eingabe\n", List_lauf->Nummer);		//Tabellenkopf etc.
 		printf("\t\t\304\304\304\304\304\304\304\304\304\304\304\304\304\304\304\305\304\304\304\304\304\304\304\304\304\304\304\304\304\304\304\n");
+		printf("%30s \263 %-30s\n", List_lauf->Suchwort, List_lauf->Eingabe);
 		while (List_lauf->next != NULL )	{					// laufe bis zum letzen Element						
 			List_lauf = List_lauf->next;
 			printf("%30s \263 %-30s\n", List_lauf->Suchwort, List_lauf->Eingabe);
