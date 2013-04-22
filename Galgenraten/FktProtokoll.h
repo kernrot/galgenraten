@@ -18,7 +18,7 @@ struct TProtokoll entferneTProtokoll(struct TProtokoll **TippProtokoll, int debu
 
 int anzTProtokollTipps(struct TProtokoll **TippProtokoll, int debug);				// gibt die Anzahl an Tipps zurück
 
-void printTProtokoll(struct TProtokoll **TippProtokoll, int debug);					// print für ein TippProtokoll, gibt Anzahl der Rateversuche zurück
+void printTProtokoll(struct TProtokoll **TippProtokoll, int debug);					// print für ein TippProtokoll
 
 
 

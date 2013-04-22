@@ -12,7 +12,7 @@
 void DispHauptmenu(int Gk, int d){
 	// Zeigt das Hauptmenu an, Gk für Anzeige der Groß/Kleinschreibung
 	teilTitel(d);
-                                            
+
 	printf("\n");	
 	printf("\tHauptmenu\n\n");	
 	printf("\t(n) Neues Spiel starten.\n\n");
@@ -28,7 +28,7 @@ void DispHauptmenu(int Gk, int d){
 	return;
 }
 
-void DispRaten(int Fehler, char Wort[], char Zeichen[], int d){
+void DispRaten(int Fehler, char *Wort, char *Zeichen, int d){
 	// Ratebildschirm
 	teilTitel(d);
 	printf("\n\n\n\tZu erratendes Wort:\n\t");
@@ -43,7 +43,7 @@ void DispRaten(int Fehler, char Wort[], char Zeichen[], int d){
 	}
 }
 
-void DispRatenVerlauf(int Fehler, char Wort[], char Zeichen[], int d){
+void DispRatenVerlauf(int Fehler, char *Wort, char *Zeichen, int d){
 	// modifizierter Ratebildschirm für Verlaufsanzeige
 	teilTitel(d);
 	printf("\n\n\tRaterverlauf f\201r Wort %s\n\n\t", Wort);
@@ -61,7 +61,7 @@ void DispRatenVerlauf(int Fehler, char Wort[], char Zeichen[], int d){
 	}
 }
 
-void DispGewonnen(int Fehler ,char Wort[], int d){
+void DispGewonnen(int Fehler ,char *Wort, int d){
 	// Bildschirm "Gewonnen"
 	if(d!=1){ 
 		teilTitel(d);
@@ -77,7 +77,7 @@ void DispGewonnen(int Fehler ,char Wort[], int d){
 
 }
 
-void DispVerloren(int Fehler ,char Wort[],int d){
+void DispVerloren(int Fehler ,char *Wort,int d){
 	// Bildschirm "Verloren"
 	if(d!=1){ 
 		teilTitel(d);
@@ -120,7 +120,7 @@ void DispProtokollSpeichern(int d){
 	return;
 }
 
-void teilWort(char Wort[], char Zeichen[]){
+void teilWort(char *Wort, char *Zeichen){
 	//Gibt die bisher erratenen Zeichen (in Zeichen) des Worts (in Wort) aus
 
 	for (int i=0; i<lenWort(Wort); i++)
@@ -158,7 +158,7 @@ void teilTitel(int d){
 void teilGalgen(int Fehlernummer){
 	// Galgen und Männlein zeichen
 	if (Fehlernummer == 10) {
-	//  Komplett (Fehler 10)
+		//  Komplett (Fehler 10)
 		nachR(); printSW(" \311\315\315\315\273 ");
 		nachR(); printSW(" \263   \272 ");
 		nachR(); printSW("\134\235\57  \272 ");
@@ -170,7 +170,7 @@ void teilGalgen(int Fehlernummer){
 	}
 
 	if (Fehlernummer == 9) {
-	//	Fehler 9
+		//	Fehler 9
 		nachR(); printSW(" \311\315\315\315\273 ");
 		nachR(); printSW(" \263   \272 ");
 		nachR(); printSW("\134\235\57  \272 ");
@@ -182,7 +182,7 @@ void teilGalgen(int Fehlernummer){
 	}
 
 	if (Fehlernummer == 8) {
-	//	Fehler 8
+		//	Fehler 8
 		nachR(); printSW(" \311\315\315\315\273 ");
 		nachR(); printSW(" \263   \272 ");
 		nachR(); printSW("\134\235\57  \272 ");
@@ -194,7 +194,7 @@ void teilGalgen(int Fehlernummer){
 	}
 
 	if (Fehlernummer == 7) {
-	//	Fehler 7
+		//	Fehler 7
 		nachR(); printSW(" \311\315\315\315\273 ");
 		nachR(); printSW(" \263   \272 ");
 		nachR(); printSW(" \235\57  \272 ");
@@ -206,7 +206,7 @@ void teilGalgen(int Fehlernummer){
 	}
 
 	if (Fehlernummer == 6) {
-	//	Fehler 6
+		//	Fehler 6
 		nachR(); printSW(" \311\315\315\315\273 ");
 		nachR(); printSW(" \263   \272 ");
 		nachR(); printSW(" \235   \272 ");
@@ -218,7 +218,7 @@ void teilGalgen(int Fehlernummer){
 	}
 
 	if (Fehlernummer == 5) {
-	//	Fehler 5
+		//	Fehler 5
 		nachR(); printSW(" \311\315\315\315\273 ");
 		nachR(); printSW(" \263   \272 ");
 		nachR(); printSW(" \235   \272 ");
@@ -230,7 +230,7 @@ void teilGalgen(int Fehlernummer){
 	}
 
 	if (Fehlernummer == 4) {
-	//	Fehler 4
+		//	Fehler 4
 		nachR(); printSW(" \311\315\315\315\273 ");
 		nachR(); printSW(" \263   \272 ");
 		nachR(); printSW("     \272 ");
@@ -242,7 +242,7 @@ void teilGalgen(int Fehlernummer){
 	}
 
 	if (Fehlernummer == 3) {
-	//	Fehler 3
+		//	Fehler 3
 		nachR(); printSW("   \315\315\273 ");
 		nachR(); printSW("     \272 ");
 		nachR(); printSW("     \272 ");
@@ -254,7 +254,7 @@ void teilGalgen(int Fehlernummer){
 	}
 
 	if (Fehlernummer == 2) {
-	//	Fehler 2
+		//	Fehler 2
 		nachR(); printSW("       ");
 		nachR(); printSW("       ");
 		nachR(); printSW("       ");
@@ -266,7 +266,7 @@ void teilGalgen(int Fehlernummer){
 	}
 
 	if (Fehlernummer == 1) {
-	//	Fehler 1
+		//	Fehler 1
 		nachR(); printSW("       ");
 		nachR(); printSW("       ");
 		nachR(); printSW("       ");
@@ -278,7 +278,7 @@ void teilGalgen(int Fehlernummer){
 	}
 
 	if (Fehlernummer == 0) {
-	//	Leer
+		//	Leer
 		printf("\n\n\n\n\n\n\n");
 		nachM(); printf("Fehler 0 von 10\n\n");
 	}

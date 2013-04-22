@@ -8,8 +8,8 @@ void eignesSpeicherzielWProtokoll(struct WProtokoll *WortProtokoll, int debug); 
 
 void anzeigenWoerter(struct WProtokoll *WortProtokoll, int debug);		// gibt alle bisher im Protokoll enthaltenen Wörter aus
 void anzeigenTippVerlauf(struct WProtokoll *WortProtokoll, int debug);	// gibt einen Rateverlauf für ein aus dem WPr wählbares Wort aus
-void abspielenTippVerlauf(struct TProtokoll *TippProtokoll, int debug); 
-struct WProtokoll loeschenTippVerlauf(struct WProtokoll *WortProtokoll, int debug);
+void abspielenTippVerlauf(struct TProtokoll *TippProtokoll, int debug);  // Zeigt den TippVerlauf eines Wortes (TPr)
+struct WProtokoll loeschenTippVerlauf(struct WProtokoll *WortProtokoll, int debug); // löscht einen TippVerlauf, gibt Liste zurück
 
 #endif
 

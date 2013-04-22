@@ -12,27 +12,27 @@
 struct TProtokoll hinzuTProtokoll(struct TProtokoll **lst, int Nummer, char Suchwort[28], char Eingabe[28], int d) {
 	// Fügt einen Protokolleintrag hinzu
 
-    struct TProtokoll *nElement;
-    struct TProtokoll *List_lauf = *lst;						// Startelement der Liste
- 
-    nElement = (struct TProtokoll*) calloc(1,sizeof(*nElement));// hole  geleerten speicher für ein Element
+	struct TProtokoll *nElement;
+	struct TProtokoll *List_lauf = *lst;						// Startelement der Liste
+
+	nElement = (struct TProtokoll*) calloc(1,sizeof(*nElement));// hole  geleerten speicher für ein Element
 	//if (nElement) memset(nElement,0,sizeof(*nElement));
-    strcpy(nElement->Suchwort,  Suchwort);
+	strcpy(nElement->Suchwort,  Suchwort);
 	strcpy(nElement->Eingabe,  Eingabe);
 	nElement->Nummer = Nummer;
-    nElement->next = NULL;										// Folgeelement bzw Ende
+	nElement->next = NULL;										// Folgeelement bzw Ende
 	nElement->prev = NULL;										// vorhergehendes Element
- 
-    if ( List_lauf->Nummer != NULL ) {							// sind Elemente vorhanden
-        while (List_lauf->next != NULL )	{					// suche das letzte Element						
+
+	if ( List_lauf->Nummer != NULL ) {							// sind Elemente vorhanden
+		while (List_lauf->next != NULL )	{					// suche das letzte Element						
 			List_lauf=List_lauf->next;
 		}
 		nElement->prev=List_lauf;								// letztes Element wird vorgänger des aktuellen
-        List_lauf->next=nElement;								// Hänge das wort hinten an
-		
-    }
-    else														// wenn die Liste leer ist, das erstes Element
-    {
+		List_lauf->next=nElement;								// Hänge das wort hinten an
+
+	}
+	else														// wenn die Liste leer ist, das erstes Element
+	{
 		*lst=nElement;
 	}
 	return *nElement;
@@ -41,10 +41,10 @@ struct TProtokoll hinzuTProtokoll(struct TProtokoll **lst, int Nummer, char Such
 struct TProtokoll entferneTProtokoll(struct TProtokoll **lst, int d) {
 	//entfernt das letzte Element aus der Liste, gibt Liste zurück
 
-    struct TProtokoll *List_lauf = *lst;						// Startelement der Liste
- 
-    if ( List_lauf->Nummer != NULL ) {							// sind Elemente vorhanden
-        while (List_lauf->next != NULL )	{					// suche das letzte Element						
+	struct TProtokoll *List_lauf = *lst;						// Startelement der Liste
+
+	if ( List_lauf->Nummer != NULL ) {							// sind Elemente vorhanden
+		while (List_lauf->next != NULL )	{					// suche das letzte Element						
 			List_lauf=List_lauf->next;
 		}
 		if (List_lauf->prev != NULL) List_lauf->prev->next=NULL;// next Pointer des vorletzten Elements auf NULL								
@@ -55,9 +55,9 @@ struct TProtokoll entferneTProtokoll(struct TProtokoll **lst, int d) {
 int anzTProtokollTipps(struct TProtokoll **lst, int d) {
 	//gibt die Anzahl an Tipps zurück
 
-    struct TProtokoll *List_lauf = *lst;						// Startelement der Liste
+	struct TProtokoll *List_lauf = *lst;						// Startelement der Liste
 	int anz = 0;
-    if ( List_lauf->Nummer != NULL ) {			// sind Elemente vorhanden
+	if ( List_lauf->Nummer != NULL ) {			// sind Elemente vorhanden
 		while (List_lauf->next != NULL )	{					// suche das letzte Element						
 			List_lauf = List_lauf->next;
 			anz++;
@@ -69,10 +69,10 @@ int anzTProtokollTipps(struct TProtokoll **lst, int d) {
 void printTProtokoll (struct TProtokoll **lst, int d) {
 	//print für ein TippProtokoll, gibt Anzahl der Rateversuche zurück
 
-    struct TProtokoll *List_lauf = *lst;						// Startelement der Liste
+	struct TProtokoll *List_lauf = *lst;						// Startelement der Liste
 	int vers = 0;												// Summe der Versuche
-    if ( List_lauf->Nummer != NULL ) {							// sind Elemente vorhanden
-	
+	if ( List_lauf->Nummer != NULL ) {							// sind Elemente vorhanden
+
 		printf("\nNr. %d\t\t      Suchwort \302 Eingabe\n", List_lauf->Nummer);		//Tabellenkopf etc.
 		printf("\t\t\304\304\304\304\304\304\304\304\304\304\304\304\304\304\304\305\304\304\304\304\304\304\304\304\304\304\304\304\304\304\304\n");
 		while (List_lauf->next != NULL )	{					// laufe bis zum letzen Element						
@@ -96,26 +96,26 @@ void printTProtokoll (struct TProtokoll **lst, int d) {
 struct WProtokoll hinzuWProtokoll(struct WProtokoll **lst, struct TProtokoll **an, int d) {
 	//ein TippProtokoll zum WortProtokoll hinzufügen, gibt das hinzugefügte zurück
 
-    struct WProtokoll *nElement;
-    struct WProtokoll *List_lauf = *lst;						// Startelement der Liste
- 
-    nElement = (struct WProtokoll*)  calloc(1,sizeof(WProtokoll));	// hole  geleerten speicher für ein Element
+	struct WProtokoll *nElement;
+	struct WProtokoll *List_lauf = *lst;						// Startelement der Liste
+
+	nElement = (struct WProtokoll*)  calloc(1,sizeof(WProtokoll));	// hole  geleerten speicher für ein Element
 	//if (nElement) memset(nElement,0,sizeof(*nElement));
 	nElement->TippProtokoll = *an;
-    nElement->Nummer = nElement->TippProtokoll->Nummer;
+	nElement->Nummer = nElement->TippProtokoll->Nummer;
 	nElement->next = NULL;										// Folgeelement bzw Ende
 	nElement->prev = NULL;										// vorhergehendes Element
- 
-    if ( List_lauf->Nummer != NULL ) {			// sind Elemente vorhanden
-        while (List_lauf->next != NULL )	{					// suche das letzte Element						
+
+	if ( List_lauf->Nummer != NULL ) {			// sind Elemente vorhanden
+		while (List_lauf->next != NULL )	{					// suche das letzte Element						
 			List_lauf=List_lauf->next;
 		}
 		nElement->prev=List_lauf;								// letztes Element wird vorgänger des aktuellen
-        List_lauf->next=nElement;								// Hänge das wort hinten an
+		List_lauf->next=nElement;								// Hänge das wort hinten an
 
-    }
-    else														// wenn die Liste leer ist, das erstes Element
-    {
+	}
+	else														// wenn die Liste leer ist, das erstes Element
+	{
 		*lst=nElement;
 	}
 	return *nElement;
@@ -124,30 +124,30 @@ struct WProtokoll hinzuWProtokoll(struct WProtokoll **lst, struct TProtokoll **a
 struct WProtokoll entferneWProtokoll(struct WProtokoll **lst, int d) {
 	//entfernt das letzte Element aus der Liste gibt Liste zurück
 
-    struct WProtokoll *List_lauf = *lst;						// Startelement der Liste
-	
-    if ( List_lauf->Nummer != NULL ) {							// sind Elemente vorhanden
-        while (List_lauf->next != NULL )	{					// suche das letzte Element						
+	struct WProtokoll *List_lauf = *lst;						// Startelement der Liste
+
+	if ( List_lauf->Nummer != NULL ) {							// sind Elemente vorhanden
+		while (List_lauf->next != NULL )	{					// suche das letzte Element						
 			*List_lauf=*List_lauf->next;
 		}
 		*List_lauf=*List_lauf->prev;
 		List_lauf->next=NULL;								// next Pointer des vorletzten Elements auf NULL								
-    }
+	}
 	return **lst;
 }
 
 struct WProtokoll entferneWProtokollNummer(struct WProtokoll **lst, int Nummer, int d) {
 	// entfernt das Element mit der entsp. Nummer aus der Liste gibt Liste zurück
 
-    struct WProtokoll *List_lauf = *lst;						// Startelement der Liste
-	
-    if ( List_lauf->Nummer != NULL ) {							// sind Elemente vorhanden
-        while (List_lauf->next != NULL && intPositiv(List_lauf->Nummer) != Nummer)	{	// suche passendes Element	
+	struct WProtokoll *List_lauf = *lst;						// Startelement der Liste
+
+	if ( List_lauf->Nummer != NULL ) {							// sind Elemente vorhanden
+		while (List_lauf->next != NULL && intPositiv(List_lauf->Nummer) != Nummer)	{	// suche passendes Element	
 			*List_lauf=*List_lauf->next;
 		}
 
 		if (intPositiv(List_lauf->Nummer) == Nummer) {								// prüfen ob Nummer korrekt
-			
+
 			struct WProtokoll *ePrev = List_lauf->prev;
 			struct WProtokoll *eNext = List_lauf->next;
 			ePrev->next = List_lauf->next;					// Folgeelement des Vorgängers
@@ -157,12 +157,12 @@ struct WProtokoll entferneWProtokollNummer(struct WProtokoll **lst, int Nummer, 
 			}												// Element selbst freigeben
 
 			printf("Debug: Element Nummer %d entfernt.\n", Nummer);
-		
+
 		} else {
 			printf("Debug: Element Nummer %d nicht vorhanden.\n", Nummer);
 		}
-		
-    }
+
+	}
 	return **lst;
 }
 
@@ -171,16 +171,16 @@ struct WProtokoll entferneWProtokollNummer(struct WProtokoll **lst, int Nummer, 
 int OLDanzWProtokoll(struct WProtokoll **lst, int d) {
 	// Anzahl der TippProtokolle in einem WortProtokoll
 
-    struct WProtokoll *List_lauf = *lst;						// Startelement der Liste
+	struct WProtokoll *List_lauf = *lst;						// Startelement der Liste
 	int anz = 0;
 
-    if ( List_lauf->Nummer != NULL ) {							// sind Elemente vorhanden
+	if ( List_lauf->Nummer != NULL ) {							// sind Elemente vorhanden
 		anz = 1;
-        while (List_lauf->next != NULL )	{					// suche das letzte Element							
+		while (List_lauf->next != NULL )	{					// suche das letzte Element							
 			List_lauf=List_lauf->next;
 			anz++;
 		}
-    }
+	}
 	return anz;
 }
 
@@ -201,15 +201,15 @@ int isInWProtokoll(struct WProtokoll **lst, int num, int d) {
 	struct WProtokoll *List_lauf = *lst;						// Startelement der Liste
 	int vorh = 0;
 
-    if ( List_lauf->Nummer != NULL ) {							// sind Elemente vorhanden
-        while (List_lauf->next != NULL && vorh == 0 )	{					// suche das letzte Element							
+	if ( List_lauf->Nummer != NULL ) {							// sind Elemente vorhanden
+		while (List_lauf->next != NULL && vorh == 0 )	{					// suche das letzte Element							
 			if (num == intPositiv(List_lauf->Nummer)){ 
 				vorh=1;													// wenn nummer des aktuellen Elements gleich der gesuchen
 			}
 			List_lauf=List_lauf->next;							//nächstes Element
 		}
 		if (intPositiv(List_lauf->Nummer) == num) vorh=1;		//letztes Element auch noch testen
-    }
+	}
 	return vorh;
 }
 
@@ -217,10 +217,10 @@ int isInWProtokoll(struct WProtokoll **lst, int num, int d) {
 void printWProtokoll(struct WProtokoll **lst, int d) {
 	// printTProtokoll für alle TippProtokolle in einem WortProtokoll
 
-    struct WProtokoll *List_lauf = *lst;						// Startelement der Liste
-	
-    if ( List_lauf->Nummer != NULL ) {			// sind Elemente vorhanden
-        printTProtokoll(&(List_lauf->TippProtokoll),d);
+	struct WProtokoll *List_lauf = *lst;						// Startelement der Liste
+
+	if ( List_lauf->Nummer != NULL ) {			// sind Elemente vorhanden
+		printTProtokoll(&(List_lauf->TippProtokoll),d);
 		printf("\n\tbeliebige Taste dr\201cken f\201r n\204chstes Wort\n\n");
 		Taste(d);
 		while (List_lauf->next != NULL )	{					// suche das letzte Element						
@@ -229,7 +229,7 @@ void printWProtokoll(struct WProtokoll **lst, int d) {
 			printf("\n\tbeliebige Taste dr\201cken f\201r n\204chstes Wort\n\n");
 			Taste(d);
 		}
-    }
+	}
 	else
 	{
 		printf("WortProtokoll ist leer.\n");
@@ -240,10 +240,10 @@ void printWProtokoll(struct WProtokoll **lst, int d) {
 void printWProtokollEinzelwoerter(struct WProtokoll **lst, int numMarkiert, int d) {
 	// alle TippProtokolle in einem WortProtokoll auflisten
 
-    struct WProtokoll *List_lauf = *lst;		// Startelement der Liste
+	struct WProtokoll *List_lauf = *lst;		// Startelement der Liste
 	char m;
 
-    if ( List_lauf->Nummer != NULL ) {			// sind Elemente vorhanden
+	if ( List_lauf->Nummer != NULL ) {			// sind Elemente vorhanden
 		if  (intPositiv(List_lauf->TippProtokoll->Nummer) == numMarkiert) { m = '>'; } else { m = ' '; }
 		printf("\t%c %d\t %s\n",m , intPositiv(List_lauf->TippProtokoll->Nummer) , List_lauf->TippProtokoll->Suchwort);
 		while (List_lauf->next != NULL )	{					// gehe bis letztes Element						
@@ -251,7 +251,7 @@ void printWProtokollEinzelwoerter(struct WProtokoll **lst, int numMarkiert, int 
 			if  (intPositiv(List_lauf->TippProtokoll->Nummer) == numMarkiert) { m = '>'; } else { m = ' '; }
 			printf("\t%c %d\t %s\n", m, intPositiv(List_lauf->TippProtokoll->Nummer) , List_lauf->TippProtokoll->Suchwort);
 		}
-    }
+	}
 	else
 	{
 		printf("WortProtokoll ist leer.\n");
@@ -280,7 +280,7 @@ struct WProtokoll lesenWProtokoll(char* pfad, int d) {
 	char tSuchwort[28];
 	char tEingabe[28];
 
-	
+
 	if ((unbenutzteZeichen(pfad, "protokoll.log") < 1) && (datei == NULL)) {	// Falls Standarddatei leer Programmabbruch mit Fehlermeldung
 		printf("Standardprotokoll protokoll.log nicht gefunden. Programm wird beendet.");
 		Taste(d);
@@ -325,7 +325,7 @@ void speichernWProtokoll(struct WProtokoll **s, char* pfad, int d) {
 
 	if ( ListT_lauf->Nummer != 0) {							//falls Wortliste nicht leer
 
-		
+
 		FILE *datei;
 		datei = fopen(pfad, "w+");							//Datei zum schreiben öffnen
 
