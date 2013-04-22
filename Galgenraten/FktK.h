@@ -11,6 +11,7 @@ int Zufall(int max);					// Zufallszahl zwischen 0 und max
 char Taste(int debug);							// Gibt Tastendruck zurück							
 char* charsKlein(char Zeichen[]);				// gibt einen Buchstaben kleingeschrieben zurück
 char* charsGK(char Zeichen[], int klein);	// wie oben, jedoch nur bei klein = 1
+int checkPfad(char* Pfad);	//Prüft eine Zeichenkette (Dateiname) auf Sonderzeichen, return 0 wenn Sonderzeichen enthalten.
 
 // ''''''''''''''''''''''''''''''''''''''
 // Funktionen zur Zeichenkettenverarbeitung

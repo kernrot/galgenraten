@@ -10,6 +10,7 @@
 #include "FktProtokoll.h"	//Funktionen für TippProtokoll
 #include "FktWoerterbuch.h" //Funktionen für das Wörterbuch
 
+
 void main(){
 	int d = 0;
 	

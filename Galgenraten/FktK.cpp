@@ -3,6 +3,7 @@
 //#include <string.h>
 #include <time.h>
 #include <conio.h>
+#include <string.h>
 
 #include "FktK.h"
 
@@ -20,21 +21,21 @@ int char2intZahlenTasten(char c) {
 	}
 	return i;
 }
- 
+
 int intPositiv(int i) {
 	// Integer postiv machen
 	if (i<0) i=i*-1;
 	return i;
 }
 
- int Zufall(int max) {
-	 //gibt eine Zufallszahl zwischen 0 und max zurück
+int Zufall(int max) {
+	//gibt eine Zufallszahl zwischen 0 und max zurück
 
-    time_t t;
-    time(&t);
-    srand((unsigned int)t);              // Zufallsgenerator
+	time_t t;
+	time(&t);
+	srand((unsigned int)t);              // Zufallsgenerator
 	return rand() % (max+1);
-  }
+}
 
 char Taste(int d) {
 	// Fängt einen Tastendruck ab und gibt das passende Zeichen zurück
@@ -57,9 +58,9 @@ char* charsKlein(char c[]) {
 			c[i] += 32;
 		}
 		switch (c[i]){
-			case char(142) : c[i] = char(132); break;		// Ä
-			case char(153) : c[i] = char(148); break;		// Ö
-			case char(154) : c[i] = char(129); break;		// Ü
+		case char(142) : c[i] = char(132); break;		// Ä
+		case char(153) : c[i] = char(148); break;		// Ö
+		case char(154) : c[i] = char(129); break;		// Ü
 		}
 
 	}
@@ -69,6 +70,24 @@ char* charsKlein(char c[]) {
 char* charsGK(char c[], int gk){
 	if (gk == 1) { charsKlein(c);}	
 	return c;
+}
+
+int checkPfad(char* Pfad){
+	//Prüft eine Zeichenkette (Dateiname) auf Sonderzeichen, return 0 wenn Sonderzeichen enthalten.
+	int gueltig=1;
+	int pfadLaenge = lenWort(Pfad);
+
+	for (int i=0;i<pfadLaenge;i++){
+		// if (Großbuchstaben            oder      Kleinbuchstaben           oder Punkt    oder    Zahlen
+		if ((Pfad[i] < 91 && Pfad[i] > 64) || (Pfad[i] < 123 && Pfad[i] > 96) || Pfad[i] == 46 || (Pfad[i] < 58 && Pfad[i] > 64)){
+			//gültiges Zeichen
+			//printf("%d",Pfad[i],Pfad[i]);
+		}else{
+			//ungültiges Zeichen
+			gueltig = 0;
+		}
+	}
+	return gueltig;
 }
 
 // ''''''''''''''''''''''''''''''''''''''
@@ -111,7 +130,7 @@ int fehlendeZeichen(char Wort[], char Zeichen[]){
 	for (int i=0; i<lenWort(Wort); i++){
 		fehlendeZeichen++;
 		for(int j=0; j<lenWort(Zeichen); j++){
-			
+
 			if (Wort[i] == Zeichen[j]){
 				fehlendeZeichen--;
 			}
@@ -124,7 +143,7 @@ int fehlendeZeichen(char Wort[], char Zeichen[]){
 
 int unbenutzteZeichen(char Wort[], char Zeichen[]){
 	// Prüft wieviele Zeichen aus Zeichen nicht in Wort enthalten sind.
-	
+
 	int unbenutzteZeichen = lenWort(Zeichen);
 
 	for (int i=0; i<lenWort(Zeichen) ; i++){
@@ -150,5 +169,5 @@ void printSW(char line[80]){
 		}
 
 	}
-		printf("\n");
+	printf("\n");
 }
