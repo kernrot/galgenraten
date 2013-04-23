@@ -6,24 +6,24 @@
 // ''''''''''''''''''''''''''''''''''''''
 
 int char2intZahlenTasten(char c);	// zu einer Zahlentaste das entsprechende int zurückgeben
-int intPositiv (int Zahl);				// Integer postiv machen
-int Zufall(int max);					// Zufallszahl zwischen 0 und max
-char Taste(int debug);							// Gibt Tastendruck zurück							
-char* charsKlein(char Zeichen[]);				// gibt einen Buchstaben kleingeschrieben zurück
-char* charsGK(char Zeichen[], int klein);	// wie oben, jedoch nur bei klein = 1
+int intPositiv (int Zahl);	// Integer postiv machen
+int Zufall(int max);	// Zufallszahl zwischen 0 und max
+char Taste(int debug);	// Gibt Tastendruck zurück							
+char* charsKlein(char *Zeichen);	// gibt einen Buchstaben kleingeschrieben zurück
+char* charsGK(char *Zeichen, int klein);	// wie oben, jedoch nur bei klein = 1
 int checkPfad(char* Pfad);	//Prüft eine Zeichenkette (Dateiname) auf Sonderzeichen, return 0 wenn Sonderzeichen enthalten.
 
 // ''''''''''''''''''''''''''''''''''''''
 // Funktionen zur Zeichenkettenverarbeitung
 // ''''''''''''''''''''''''''''''''''''''
 
-int lenWort(char[]);					// Wortlänge
-int vorhandeneZeichen(char suchZeichen[], char Zeichenkette[]);	// Testet ob Zeichen in Zeichenkette vorhanden sind, return Anzahl
-int fehlendeZeichen(char Wort[], char Zeichen[]); // Prüft wieviele Zeichen in Wort und nicht in Zeichen enthalten sind.
-int unbenutzteZeichen(char Wort[], char Zeichen[]); // Prüft wieviele Zeichen aus Zeichen nicht in Wort enthalten sind.
+int lenWort(char*Zeichenkette);	// Wortlänge
+int vorhandeneZeichen(char *suchZeichen, char *Zeichenkette);	// Testet ob Zeichen in Zeichenkette vorhanden sind, return Anzahl
+int fehlendeZeichen(char *Wort, char *Zeichen);	// Prüft wie viele Zeichen in Wort und nicht in Zeichen enthalten sind.
+int unbenutzteZeichen(char *Wort, char *Zeichen);	// Prüft wie viele Zeichen aus Zeichen nicht in Wort enthalten sind.
 
 // Ascii-Art Zeug
-void printSW(char line[80]);
+void printSW(char line[80]);	// Zeichenfunktion für einfache Bildschirmgrafik mit #-_ als ausgefüllte Blöcke
 
 #endif
 

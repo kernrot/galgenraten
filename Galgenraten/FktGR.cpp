@@ -74,10 +74,10 @@ struct TProtokoll neuGalgen(struct wort *Wortliste, struct TProtokoll *Pr, int G
 
 	if (Fehler < 10) {
 		DispGewonnen(Fehler,Suchwort, d);						// Gewonnen wenn weniger als 10 Fehler
-		printf("\n\t(Enter) zum Hauptmenu zur\201ck zu kehren\n\t(Leertaste) ein weiters Wort raten");
+		printf("\n\t(Enter) zum Hauptmenu zur\201ck zu kehren\n\t(Leertaste) ein weiteres Wort raten");
 	} else {
 		DispVerloren(Fehler,Suchwort, d);
-		printf("\n\t(Enter) zum Hauptmenu zur\201ck zu kehren\n\t(Leertaste) ein weiters Wort raten");
+		printf("\n\t(Enter) zum Hauptmenu zur\201ck zu kehren\n\t(Leertaste) ein weiteres Wort raten");
 	}
 	return *Pr;
 }
@@ -163,19 +163,17 @@ struct WProtokoll loeschenTippVerlauf(struct WProtokoll *WPr, int d){
 		tmpTaste = Taste(d);
 
 		if (tmpTaste == 27) return *WPr;	// vorgang abbrechen
-
 		if (tmpTaste == 72 && WortNummer > firstWortNummer) { // Pfeiltaste nach oben
 			WortNummer--;
 			while (isInWProtokoll(&WPr,WortNummer,d) == 0){
-				WortNummer--;		// Index für das nächste setzen (relevant element gelöscht)
+				WortNummer--;		// Index für das nächste setzen (relevantes Element gelöscht/nicht vorhanden)
 			}
 			if(d)printf("Debug: nach oben\n"); 
 		}		
-
 		if (tmpTaste == 80 && WortNummer < lastWortNummer) { // unten
 			WortNummer++;
 			while (isInWProtokoll(&WPr,WortNummer,d) == 0){
-				WortNummer++;		// Index für das vorherige setzen (relevant element gelöscht)
+				WortNummer++;		// Index für das vorherige setzen (relevantes Element gelöscht/nicht vorhanden)
 			}
 			if(d)printf("Debug: nach unten\n"); 
 		}	

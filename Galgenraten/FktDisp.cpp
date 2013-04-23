@@ -11,18 +11,22 @@
 
 void DispHauptmenu(int Gk, int d){
 	// Zeigt das Hauptmenu an, Gk für Anzeige der Groß/Kleinschreibung
+	// nicht schön im Code aber toll auf dem Bildschirm
 	teilTitel(d);
 
 	printf("\n");	
 	printf("\tHauptmenu\n\n");	
-	printf("\t(n) Neues Spiel starten.\n\n");
-	printf("\t(a) Anzeigen aller geratenen W\224rter.\n");	
-	printf("\t(v) Anzeigen eines Rateverlaufs.\n");
-	printf("\t(l) L\224schen eines Rateverlaufs.\n\n");
-	printf("\t(w) Wortliste einlesen.\n");	
-	printf("\t(p) Protokoll laden.\n");
+	printf("\t(n) Neues Spiel starten.");					nachM();	printSW(" \311\315\315\315\273 ");
+	nachR();															printSW(" \263   \272 ");
+	printf("\t(a) Anzeigen aller geratenen W\224rter.\t\t");			printSW("\134\235\57  \272 ");
+	printf("\t(v) Anzeigen eines Rateverlaufs.\t\t");					printSW(" \333   \272 ");
+	printf("\t(l) L\224schen eines Rateverlaufs.");			nachM();	printSW("\57 \134  \272 ");
+	nachR();															printSW("     \272 ");
+	printf("\t(w) Wortliste einlesen.\t");					nachM();	printSW("     \272 ");
+	printf("\t(p) Protokoll laden.\t");						nachM();	printSW("    \315\312\315");
 	printf("\t(s) Protokoll speichern unter..\n\n");
-	printf("\t(g) Gro\341/Kleinschreibung "); 	if(Gk==1) { printf("[Aus]\n\n"); } if(Gk==-1) { printf("[Ein]\n\n"); }
+	printf("\t(g) Gro\341/Kleinschreibung ");
+	if(Gk==1) { printf("[Aus]\n\n"); } if(Gk==-1) { printf("[Ein]\n\n"); } // Groß-/Kleinanzeige
 	printf("\t(b) Beenden.\n");	
 	printf("\n\n\t(Ausw\204hlen mit Tastendruck)\n");	
 	return;
@@ -39,7 +43,7 @@ void DispRaten(int Fehler, char *Wort, char *Zeichen, int d){
 		for (int i=0; i<lenWort(Zeichen); i++){ printf("%c",Zeichen[i]); }
 		printf("\n\tBuchstabe tippen um zu raten.");
 	} else {
-		printf("\n\t(Enter) zum Hauptmenu zur\201ck zu kehren\n(Leertaste) ein weiters Wort raten");
+		printf("\n\t(Enter) zum Hauptmenu zur\201ck zu kehren\n(Leertaste) ein weiteres Wort raten");
 	}
 }
 
@@ -73,7 +77,7 @@ void DispGewonnen(int Fehler ,char *Wort, int d){
 	}
 	printf("\n\tGewonnen mit %d falschen Tipps, gesuchtes Wort war:\n\t\"%s\".\n\n", Fehler, Wort);
 	teilGalgen(Fehler);
-	//printf("\n\t(Enter) zum Hauptmenu zur\201ck zu kehren\n\t(Leertaste) ein weiters Wort raten");
+	//printf("\n\t(Enter) zum Hauptmenu zur\201ck zu kehren\n\t(Leertaste) ein weiteres Wort raten");
 
 }
 
@@ -89,7 +93,7 @@ void DispVerloren(int Fehler ,char *Wort,int d){
 	}
 	printf("\n\tVerloren mit %d falschen Tipps, gesuchtes Wort war:\n\t\"%s\".\n\n", Fehler, Wort);
 	teilGalgen(Fehler);
-	//printf("\n\t(Enter) zum Hauptmenu zur\201ck zu kehren\n\t(Leertaste) ein weiters Wort raten");
+	//printf("\n\t(Enter) zum Hauptmenu zur\201ck zu kehren\n\t(Leertaste) ein weiteres Wort raten");
 
 }
 

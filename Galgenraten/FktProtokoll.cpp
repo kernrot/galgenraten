@@ -57,7 +57,7 @@ int anzTProtokollTipps(struct TProtokoll **lst, int d) {
 
 	struct TProtokoll *List_lauf = *lst;						// Startelement der Liste
 	int anz = 0;
-	if ( List_lauf->Nummer != NULL ) {			// sind Elemente vorhanden
+	if ( List_lauf->Nummer != NULL ) {							// sind Elemente vorhanden
 		while (List_lauf->next != NULL )	{					// suche das letzte Element						
 			List_lauf = List_lauf->next;
 			anz++;
@@ -129,9 +129,9 @@ struct WProtokoll entferneWProtokoll(struct WProtokoll **lst, int d) {
 
 	if ( List_lauf->Nummer != NULL ) {							// sind Elemente vorhanden
 		while (List_lauf->next != NULL )	{					// suche das letzte Element						
-			*List_lauf=*List_lauf->next;
+			List_lauf=List_lauf->next;
 		}
-		*List_lauf=*List_lauf->prev;
+		List_lauf=List_lauf->prev;
 		List_lauf->next=NULL;								// next Pointer des vorletzten Elements auf NULL								
 	}
 	return **lst;
@@ -144,21 +144,32 @@ struct WProtokoll entferneWProtokollNummer(struct WProtokoll **lst, int Nummer, 
 
 	if ( List_lauf->Nummer != NULL ) {							// sind Elemente vorhanden
 		while (List_lauf->next != NULL && intPositiv(List_lauf->Nummer) != Nummer)	{	// suche passendes Element	
-			*List_lauf=*List_lauf->next;
+			List_lauf=List_lauf->next;
 		}
 
 		if (intPositiv(List_lauf->Nummer) == Nummer) {								// prüfen ob Nummer korrekt
 
-			struct WProtokoll *ePrev = List_lauf->prev;
-			struct WProtokoll *eNext = List_lauf->next;
-			ePrev->next = List_lauf->next;					// Folgeelement des Vorgängers
-			eNext->prev = List_lauf->prev;					// Vorgängerelement des Nachfolgers
-			while (List_lauf->prev != NULL) {				// Zurück zum ersten listenelement
-				*List_lauf=*List_lauf->prev;
-			}												// Element selbst freigeben
+			if(List_lauf->prev == NULL && List_lauf->next != NULL){	//Falls es das erste Listenelement ist
+				*List_lauf=*List_lauf->next;			//Listenstart auf das nächste Element
+				free(&List_lauf->prev);
+				List_lauf->prev = NULL;					//vorgänger entfernen
+
+			}else{
+				if(List_lauf->next != NULL || List_lauf->prev != NULL){		//falls es noch andere Elemente in der Liste gibt
+
+					struct WProtokoll *ePrev = List_lauf->prev;
+					struct WProtokoll *eNext = List_lauf->next;
+					if(ePrev) ePrev->next = List_lauf->next;					// Folgeelement des Vorgängers
+					if(eNext) eNext->prev = List_lauf->prev;					// Vorgängerelement des Nachfolgers
+					free(List_lauf);	// Element selbst freigeben
+
+				}else{											//sonst letztes leeren
+					memset(List_lauf->TippProtokoll,0,sizeof(WProtokoll));
+					List_lauf->Nummer=0;
+				}
+			}
 
 			printf("Debug: Element Nummer %d entfernt.\n", Nummer);
-
 		} else {
 			printf("Debug: Element Nummer %d nicht vorhanden.\n", Nummer);
 		}
@@ -233,7 +244,7 @@ void printWProtokoll(struct WProtokoll **lst, int d) {
 	}
 	else
 	{
-		printf("WortProtokoll ist leer.\n");
+		printf("\tProtokoll ist leer.\n");
 		Taste(d);
 	}
 }
@@ -255,7 +266,7 @@ void printWProtokollEinzelwoerter(struct WProtokoll **lst, int numMarkiert, int 
 	}
 	else
 	{
-		printf("WortProtokoll ist leer.\n");
+		printf("\tProtokoll ist leer.\n");
 	}
 }
 
@@ -268,9 +279,11 @@ struct WProtokoll lesenWProtokoll(char* pfad, int d) {
 
 	struct TProtokoll *TPr;
 	TPr = (struct TProtokoll*)  calloc(1,sizeof(TProtokoll));
+	if(TPr == NULL) { printf("Kein Arbeitsspeicher vorhanden.\n"); Taste(d); exit(1);}
 	//if (TPr) memset(TPr,0,sizeof(*TPr));
 	struct WProtokoll *WPr;
 	WPr = (struct WProtokoll*)  calloc(1,sizeof(WProtokoll));
+	if(WPr == NULL) { printf("Kein Arbeitsspeicher vorhanden.\n"); Taste(d); exit(1);}
 	//if (WPr) memset(WPr,0,sizeof(*WPr));
 
 
@@ -290,6 +303,7 @@ struct WProtokoll lesenWProtokoll(char* pfad, int d) {
 
 	if(NULL == datei) 	{						// Falls Datei nicht gefunden
 		WPr = (struct WProtokoll*)  calloc(1,sizeof(WProtokoll));
+		if(WPr == NULL) { printf("Kein Arbeitsspeicher vorhanden.\n"); Taste(d); exit(1);}
 		//if (WPr) memset(WPr,0,sizeof(*WPr));
 		*WPr = lesenWProtokoll(NULL,d);
 		printf("\n\n\tProtokolldatei nicht gefunden.\n\t-> Es wurde das Standardprotokoll geladen.\n\t (Weiter mit Tastendruck)\n");
@@ -307,6 +321,7 @@ struct WProtokoll lesenWProtokoll(char* pfad, int d) {
 				if ((TPr->Nummer != NULL) && (tNummer != TPr->Nummer)) {		//Falls neues Wort und ein Tipp gelesen
 					hinzuWProtokoll(&WPr,&TPr,d);						//Wort anhängen
 					TPr = (struct TProtokoll*)  calloc(1,sizeof(TProtokoll));TPr->Nummer = NULL;
+					if(TPr == NULL) { printf("Kein Arbeitsspeicher vorhanden.\n"); Taste(d); exit(1);}
 					//if (TPr) memset(TPr,0,sizeof(*TPr));
 				}
 				hinzuTProtokoll(&TPr,tNummer,tSuchwort,tEingabe,d);	//Tipp zum TippProtokoll

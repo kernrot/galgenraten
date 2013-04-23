@@ -44,7 +44,7 @@ void hinzuWort(struct wort **lst, char Zeichen[]) {
 	neueswort->next = NULL;									// Listenende
 
 	if ( List_lauf != NULL ) {								// sind worte vorhanden
-		while (List_lauf->next != NULL )						// suche das letzte wort
+		while (List_lauf->next != NULL )					// suche das letzte wort
 			List_lauf=List_lauf->next;
 		List_lauf->next=neueswort;							// Hänge das wort hinten an
 	}
@@ -57,7 +57,7 @@ struct wort readWoerter(char* pfad, int d){
 	FILE *datei;
 	int defaultp=0;
 
-	if (pfad == NULL){
+	if (pfad == NULL){					// Standardliste falls kein Pfad übergeben
 		pfad = "default.txt";
 		defaultp = 1;
 	}

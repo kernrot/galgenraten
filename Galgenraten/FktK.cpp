@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 //#include <string.h>
-#include <time.h>
 #include <conio.h>
 #include <string.h>
 
@@ -30,10 +29,6 @@ int intPositiv(int i) {
 
 int Zufall(int max) {
 	//gibt eine Zufallszahl zwischen 0 und max zurück
-
-	time_t t;
-	time(&t);
-	srand((unsigned int)t);              // Zufallsgenerator
 	return rand() % (max+1);
 }
 
@@ -51,7 +46,7 @@ char Taste(int d) {
 }
 
 
-char* charsKlein(char c[]) {
+char* charsKlein(char *c) {
 	// gibt das einem Zeichen eintsprechende als kleingeschriebenes zurück
 	for (int i=0; i<lenWort(c); i++){
 		if ((c[i] > 64) && (c[i] < 91)){					// A-Z
@@ -67,7 +62,7 @@ char* charsKlein(char c[]) {
 	return c;
 }
 
-char* charsGK(char c[], int gk){
+char* charsGK(char *c, int gk){
 	if (gk == 1) { charsKlein(c);}	
 	return c;
 }
@@ -78,8 +73,8 @@ int checkPfad(char* Pfad){
 	int pfadLaenge = lenWort(Pfad);
 
 	for (int i=0;i<pfadLaenge;i++){
-		// if (Großbuchstaben            oder      Kleinbuchstaben           oder Punkt    oder    Zahlen
-		if ((Pfad[i] < 91 && Pfad[i] > 64) || (Pfad[i] < 123 && Pfad[i] > 96) || Pfad[i] == 46 || (Pfad[i] < 58 && Pfad[i] > 64)){
+		// if (Großbuchstaben              ||oder  Kleinbuchstaben            ||   oder Punkt  || oder    Zahlen)
+		if ((Pfad[i] < 91 && Pfad[i] > 64) || (Pfad[i] < 123 && Pfad[i] > 96) || Pfad[i] == 46 || (Pfad[i] < 58 && Pfad[i] > 47)){
 			//gültiges Zeichen
 			//printf("%d",Pfad[i],Pfad[i]);
 		}else{
@@ -94,7 +89,7 @@ int checkPfad(char* Pfad){
 // Funktionen zur Zeichenkettenverarbeitung
 // ''''''''''''''''''''''''''''''''''''''
 
-int lenWort(char Wort[]) {
+int lenWort(char *Wort) {
 	// Gibt die Wortlänge einer Zeichenkette zurück
 	int i = 0; 
 	int ende = 0;
@@ -109,7 +104,7 @@ int lenWort(char Wort[]) {
 	return i;
 }
 
-int vorhandeneZeichen (char suchZeichen[], char Zeichenkette[]) {
+int vorhandeneZeichen (char *suchZeichen, char *Zeichenkette) {
 	// Prüft ob ein Zeichen in einer Zeichenkette vorhanden ist, return Position oder -1 falls nicht
 	int anz=0;
 	for(int i=0;i<lenWort(Zeichenkette);i++){
@@ -123,7 +118,7 @@ int vorhandeneZeichen (char suchZeichen[], char Zeichenkette[]) {
 }
 
 
-int fehlendeZeichen(char Wort[], char Zeichen[]){
+int fehlendeZeichen(char *Wort, char *Zeichen){
 	// Prüft wieviele Zeichen in Wort und nicht in Zeichen enthalten sind.
 	int fehlendeZeichen = 0;
 
@@ -141,7 +136,7 @@ int fehlendeZeichen(char Wort[], char Zeichen[]){
 	return fehlendeZeichen;
 }
 
-int unbenutzteZeichen(char Wort[], char Zeichen[]){
+int unbenutzteZeichen(char *Wort, char *Zeichen){
 	// Prüft wieviele Zeichen aus Zeichen nicht in Wort enthalten sind.
 
 	int unbenutzteZeichen = lenWort(Zeichen);
@@ -160,6 +155,7 @@ int unbenutzteZeichen(char Wort[], char Zeichen[]){
 }
 
 void printSW(char line[80]){
+	//Zeichenfunktion für einfache Bildschirmgrafik mit #-_ als ausgefüllte Blöcke
 	for (int i=0; i<lenWort(line); i++){
 		switch (line[i]){
 		case '#':	printf("%c",219); break;

@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 //#include <direct.h>	//für Debug: Arbeitsverzeichnis
-//#include <Windows.h>	// nur für Sleep()
 
 #include "FktDisp.h"	//Bildschirmanzeigen für Galgenraten
 #include "FktGR.h"		//Funktionen für Galgenraten
@@ -12,18 +12,28 @@
 
 
 void main(){
-	int d = 0;
+	
+	time_t t; time(&t); srand((unsigned int)t);	// Zufallsgenerator initialisieren
+	int d = 0;	// Debugausgabe standardmäßig aus
+	//if(d)printf("Debug: Arbeitsverzeichnis ist:\n %s\n\n",_getcwd(NULL,0));
+
+	// Initialisierung der verketten Listen Wort, TProtokoll, WProtokoll
 
 	struct wort *Woerter;				// Wortliste
 	Woerter = (struct wort*) calloc(1,sizeof(*Woerter));
 	//if (Woerter) memset(Woerter,0,sizeof(*Woerter));
-	*Woerter = readWoerter(NULL, d);
+	if(Woerter == NULL) { printf("Kein Arbeitsspeicher vorhanden.\n"); Taste(d); exit(1);}
+	*Woerter = readWoerter(NULL, d);		// Wortliste einlesen
 
 	struct TProtokoll *TippProtokoll;		// TippProtokoll
+	TippProtokoll = (struct TProtokoll*) calloc(1,sizeof(*TippProtokoll));
+	//if (WortProtokoll) memset(WortProtokoll,0,sizeof(*WortProtokoll));
+	if(TippProtokoll == NULL) { printf("Kein Arbeitsspeicher vorhanden.\n"); Taste(d); exit(1);}
 
 	struct WProtokoll *WortProtokoll;		// WortProtokoll
 	WortProtokoll = (struct WProtokoll*) calloc(1,sizeof(*WortProtokoll));
 	//if (WortProtokoll) memset(WortProtokoll,0,sizeof(*WortProtokoll));
+	if(WortProtokoll == NULL) { printf("Kein Arbeitsspeicher vorhanden.\n"); Taste(d); exit(1);}
 	*WortProtokoll = lesenWProtokoll(NULL,d);
 
 
@@ -32,8 +42,8 @@ void main(){
 	int beenden = 0;
 	char WahlTaste = ' ';
 
-	while (beenden != 1){
-		//if(d)printf("Debug: Arbeitsverzeichnis ist:\n %s\n\n",_getcwd(NULL,0));
+	while (beenden != 1){	//Bleibe im Hauptmenu bis beenden gesetzt ist
+		
 		DispHauptmenu(GrossKlein, d);						// Hauptmenu zeichnen
 
 		switch (Taste(d)){									// weiter je nach Tastendruck
@@ -44,6 +54,7 @@ void main(){
 			while (WahlTaste == ' '){					// Schleife solange nach dem Spiel Leertaste gedrückt -> neues Spiel starten
 
 				TippProtokoll = (struct TProtokoll*) calloc(1,sizeof(*TippProtokoll));
+				if(TippProtokoll == NULL) { printf("Kein Arbeitsspeicher vorhanden.\n"); Taste(d); exit(1);}
 				//if (TippProtokoll) memset(TippProtokoll,0,sizeof(*TippProtokoll));
 				TippProtokoll->Nummer = 0;	
 
@@ -57,7 +68,7 @@ void main(){
 				}
 
 				WahlTaste = 0;
-				while ((WahlTaste != '\r') && (WahlTaste != ' ')){	// Mit Enter zum Hauptmenu, Leertaste weiters Wort
+				while ((WahlTaste != '\r') && (WahlTaste != ' ')){	// Mit Enter zum Hauptmenu, Leertaste weiteres Wort
 					WahlTaste = Taste(d);
 				}
 			}
@@ -104,11 +115,12 @@ void main(){
 	}
 	if(d){printWProtokoll(&WortProtokoll,d); Taste(d);}
 
-	//speichernWProtokoll(&WortProtokoll, "protokoll.log" ,d);	//Protokoll speichern
-	eignesSpeicherzielWProtokoll(WortProtokoll,d); // mit Dateinamenswahl
+	//speichernWProtokoll(&WortProtokoll, "protokoll.log" ,d);	//Protokoll speichern falls es nicht leer ist
+	if(WortProtokoll->Nummer != NULL) eignesSpeicherzielWProtokoll(WortProtokoll,d); // mit Dateinamenswahl
 
 	free(Woerter);			// genutzten Speicherbereich freigeben
 	free(WortProtokoll);
+	free(TippProtokoll);
 
 	return;
 }
