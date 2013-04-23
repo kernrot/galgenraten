@@ -68,7 +68,7 @@ void main(){
 				}
 
 				WahlTaste = 0;
-				while ((WahlTaste != '\r') && (WahlTaste != ' ')){	// Mit Enter zum Hauptmenu, Leertaste weiteres Wort
+				while ((TippProtokoll->Nummer != NULL) && (WahlTaste != '\r') && (WahlTaste != ' ')){	// wenn TippProtokoll nicht leer warte auf Tastendruck: Mit Enter zum Hauptmenu, Leertaste weiteres Wort
 					WahlTaste = Taste(d);
 				}
 			}

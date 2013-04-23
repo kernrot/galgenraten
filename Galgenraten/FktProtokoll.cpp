@@ -151,7 +151,6 @@ struct WProtokoll entferneWProtokollNummer(struct WProtokoll **lst, int Nummer, 
 
 			if(List_lauf->prev == NULL && List_lauf->next != NULL){	//Falls es das erste Listenelement ist
 				*List_lauf=*List_lauf->next;			//Listenstart auf das nächste Element
-				free(&List_lauf->prev);
 				List_lauf->prev = NULL;					//vorgänger entfernen
 
 			}else{

@@ -24,6 +24,7 @@ int unbenutzteZeichen(char *Wort, char *Zeichen);	// Prüft wie viele Zeichen aus
 
 // Ascii-Art Zeug
 void printSW(char line[80]);	// Zeichenfunktion für einfache Bildschirmgrafik mit #-_ als ausgefüllte Blöcke
+void printUeberschrift(char* Text);	// Schreibt Text mit Rahmen als Überschrift
 
 #endif
 

@@ -14,8 +14,7 @@ void DispHauptmenu(int Gk, int d){
 	// nicht schön im Code aber toll auf dem Bildschirm
 	teilTitel(d);
 
-	printf("\n");	
-	printf("\tHauptmenu\n\n");	
+	printUeberschrift("Hauptmenu");
 	printf("\t(n) Neues Spiel starten.");					nachM();	printSW(" \311\315\315\315\273 ");
 	nachR();															printSW(" \263   \272 ");
 	printf("\t(a) Anzeigen aller geratenen W\224rter.\t\t");			printSW("\134\235\57  \272 ");
@@ -35,7 +34,8 @@ void DispHauptmenu(int Gk, int d){
 void DispRaten(int Fehler, char *Wort, char *Zeichen, int d){
 	// Ratebildschirm
 	teilTitel(d);
-	printf("\n\n\n\tZu erratendes Wort:\n\t");
+	printUeberschrift("Raten");
+	printf("\tZu erratendes Wort:\n\t");
 	teilWort(Wort, Zeichen);
 	teilGalgen(Fehler);
 	if (Fehler != 10) {
@@ -50,7 +50,8 @@ void DispRaten(int Fehler, char *Wort, char *Zeichen, int d){
 void DispRatenVerlauf(int Fehler, char *Wort, char *Zeichen, int d){
 	// modifizierter Ratebildschirm für Verlaufsanzeige
 	teilTitel(d);
-	printf("\n\n\tRaterverlauf f\201r Wort %s\n\n\t", Wort);
+	printUeberschrift("Raterverlauf");
+	printf("\t f\201r Wort %s\n\n\t", Wort);
 	teilWort(Wort, Zeichen);
 	teilGalgen(Fehler);
 	if (Fehler != 10) {
@@ -100,8 +101,7 @@ void DispVerloren(int Fehler ,char *Wort,int d){
 void DispWortlistenEingabe(int d){
 	//Bildschrim für eigene Wortliste
 	teilTitel(d);
-	printf("\n");	
-	printf("\teigene Wortliste benutzen\n\n");	
+	printUeberschrift("eigene Wortliste benutzen");	
 	printf("\tBitte den Dateinamen der eigenen Wortlliste eingeben\n\t(\"*.txt\" mit Enter bestätigen.)\n\n\n");	
 	return;
 }
@@ -109,8 +109,7 @@ void DispWortlistenEingabe(int d){
 void DispProtokollEingabe(int d){
 	//Bildschrim für anderes Protokoll
 	teilTitel(d);
-	printf("\n");	
-	printf("\tein anderes Protokoll laden\n\n");	
+	printUeberschrift("ein anderes Protokoll laden");	
 	printf("\tBitte den Dateinamen des Protokolls eingeben\n\t(\"*.log\" mit Enter bestätigen.)\n\n\n");	
 	return;
 }
@@ -118,8 +117,7 @@ void DispProtokollEingabe(int d){
 void DispProtokollSpeichern(int d){
 	//Bildschrim für anderes Protokoll
 	teilTitel(d);
-	printf("\n");	
-	printf("\tProtokoll speichern\n\n");	
+	printUeberschrift("Protokoll speichern");	
 	printf("\tBitte den Zieldateinamen des Protokolls eingeben\n\t(\"*.log\" mit Enter bestätigen.)\n\n\n");	
 	return;
 }
@@ -152,9 +150,9 @@ void teilTitel(int d){
 	//cls();
 	if(d!=1){ 
 		system("CLS");
-		printf("\n");
-		nachM(); printf("Galgenraten von Conrad Henke\n");
-		nachM(); printf("   galgenr\100conradhenke.de\n");
+		printSW("\t|\t\t   Galgenraten von Conrad Henke\t\t\t|");
+		printSW("\t|\t\t      galgenr\100conradhenke.de\t\t\t|");
+		printSW("\t`~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~´");
 	}
 }
 

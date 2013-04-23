@@ -43,7 +43,8 @@ struct TProtokoll neuGalgen(struct wort *Wortliste, struct TProtokoll *Pr, int G
 		&& ((fehlendeZeichen(charsGK(Suchwort,Gk), charsGK(Eingabe,Gk)) > 0 ) || (lenWort(Eingabe) == 0)))				// Nich alle Zeichen erraten, oder keine bisher Eingegeben
 	{
 		if(d)printf("Debug: Zufaellig gewaehltes Wort: %s\nDebug: Eingabe bisher: %s\nDebug: Fehler bisher: %d\n", Suchwort, Eingabe, Fehler);
-		DispRaten(Fehler, Suchwort, Eingabe, d);
+		
+		DispRaten(Fehler, Suchwort, Eingabe, d);				//Ratebildschirm zeichen
 		tmpTaste[0] = Taste(d);									// Nutzereingabe als erstes Zeichen der Zeichenkette
 
 		// ''''''''''''''''''''''''''''''''''''''
@@ -86,8 +87,8 @@ struct TProtokoll neuGalgen(struct wort *Wortliste, struct TProtokoll *Pr, int G
 void anzeigenWoerter(struct WProtokoll *WPr, int d){
 	// gibt alle bisher im Protokoll enthaltenen Wörter aus
 	teilTitel(d);
-	printf("\n\t\tAnzeigen aller im Protokoll vorhandenen W\224erter\n");
-	printWProtokoll(&WPr,d);
+	printUeberschrift("Anzeigen aller im Protokoll vorhandenen W\224erter");
+	printWProtokoll(&WPr,d);		// Alle Wörter ausgeben
 }
 
 
@@ -102,7 +103,8 @@ void anzeigenTippVerlauf(struct WProtokoll *WPr, int d){
 
 	while (tmpTaste != '\r'){				// bis mit Enter bestätigt
 		teilTitel(d);
-		printf("\n\tWort f\201r Rateverlauf ausw\204hlen:\n\n");
+		printUeberschrift("Rateverlauf anzeigen");
+		printf("\tWort f\201r Rateverlauf ausw\204hlen:\n\n");
 
 		printWProtokollEinzelwoerter(&WPr, WortNummer, d);	// Liste der Wörter mit Marker auf WortNummer
 		printf("\n\t(oben/unten)\tPfeiltasten Wort ausw\204hlen\n\t(Enter)\tRateverlauf f\201r Wort anzeigen\t(Esc)\tAbbrechen\n");
@@ -156,7 +158,8 @@ struct WProtokoll loeschenTippVerlauf(struct WProtokoll *WPr, int d){
 
 	while (tmpTaste != '\r'){				// bis mit Enter bestätigt
 		teilTitel(d);
-		printf("\n\zu l\224schenden f\201r Rateverlauf ausw\204hlen:\n\n");
+		printUeberschrift("Rateverlauf l\224schen");
+		printf("\tzu l\224schenden f\201r Rateverlauf ausw\204hlen:\n\n");
 
 		printWProtokollEinzelwoerter(&WPr, WortNummer, d);	// Liste der Wörter mit Marker auf WortNummer
 		printf("\n\t(oben/unten)\tPfeiltasten Wort ausw\204hlen\n\t(Enter)\tRateverlauf f\201r Wort l\224schen\n\t(Esc)\tAbbrechen\n");

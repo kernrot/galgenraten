@@ -161,9 +161,23 @@ void printSW(char line[80]){
 		case '#':	printf("%c",219); break;
 		case '-':	printf("%c",223); break;
 		case '_':	printf("%c",220); break;
+		case '~':	printf("%c",196); break;
+		case '´':	printf("%c",217); break;
+		case '`':	printf("%c",192); break;
+		case '|':	printf("%c",179); break;
 		default:	printf("%c",line[i]); break;
 		}
 
 	}
 	printf("\n");
+}
+
+void printUeberschrift(char* Text){
+	// Schreibt Text mit Rahmen als Überschrift
+	char Zeile1[80]={}, Zeile2[80]={};		// 2 Zeilen anlegen
+	strcat(Zeile1,"\t| ");	strcat(Zeile1,Text);  strcat(Zeile1, " |");
+	printSW(Zeile1);		// Zeile zusammenstückeln und ausgeben
+	strcat(Zeile2,"\t`~");
+	for (int i=0; i<lenWort(Text);i++) strcat(Zeile2,"~");  strcat(Zeile2, "~´\n");
+	printSW(Zeile2);		// Zeile entsprechend länge zusammenstückeln und ausgeben
 }
