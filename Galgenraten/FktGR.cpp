@@ -95,7 +95,7 @@ int Wortauswahl(struct WProtokoll *WPr, int d){
 	int WortNummer, firstWortNummer, lastWortNummer;
 
 	WortNummer = firstWortNummer = intPositiv(WPr->TippProtokoll->Nummer);	// Indexnummer des ersten elements bestimmen
-	lastWortNummer = (&letztesWProtokoll(&WPr,d))->Nummer;								// Indexnummer des letzten elements bestimmen
+	lastWortNummer = intPositiv((&letztesWProtokoll(&WPr,d))->Nummer);								// Indexnummer des letzten elements bestimmen
 
 	int tmpTaste = 0;
 
