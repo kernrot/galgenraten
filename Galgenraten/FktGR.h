@@ -6,6 +6,7 @@ struct wort eigeneWortliste(int debug);				// laden einer eigenen Wortliste (Rat
 struct WProtokoll eigenesWProtokoll(int d);			// laden eines eigenen Protokolls, gibt dieses zurück
 void eignesSpeicherzielWProtokoll(struct WProtokoll *WortProtokoll, int debug);  // Speichern eines WortProtokolls mit wählbarem Dateiname
 
+int Wortauswahl(struct WProtokoll *WPr, int d);	// Anzeige der interaktiven Wortauswahlliste, gibt die Laufende Nummer des Worts zurück, 0 für nicht gefunden, -1 für Abbruch
 void anzeigenWoerter(struct WProtokoll *WortProtokoll, int debug);		// gibt alle bisher im Protokoll enthaltenen Wörter aus
 void anzeigenTippVerlauf(struct WProtokoll *WortProtokoll, int debug);	// gibt einen Rateverlauf für ein aus dem WPr wählbares Wort aus
 void abspielenTippVerlauf(struct TProtokoll *TippProtokoll, int debug);  // Zeigt den TippVerlauf eines Wortes (TPr)

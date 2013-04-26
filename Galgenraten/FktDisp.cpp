@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-//#include <string.h>
 
 #include "FktDisp.h"
 #include "FktK.h"
@@ -70,11 +69,11 @@ void DispGewonnen(int Fehler ,char *Wort, int d){
 	// Bildschirm "Gewonnen"
 	if(d!=1){ 
 		teilTitel(d);
-		printSW("\t #--_                                                      ");
-		printSW("\t#       #----  #   #   #--#   #   #  #   #  #----  #   # ");
-		printSW("\t#  __   #___   #   #  #    #  ##_ #  ##_ #  #___   ##_ # ");
-		printSW("\t#    #  #      #_#_#  #    #  # -##  # -##  #      # -## ");
-		printSW("\t #__#   #____  #- -#   #__#   #   #  #   #  #____  #   # ");
+		printSW("\t     #--_                                                      ");
+		printSW("\t    #       #----  #   #   #--#   #   #  #   #  #----  #   # ");
+		printSW("\t    #  __   #___   #   #  #    #  ##_ #  ##_ #  #___   ##_ # ");
+		printSW("\t    #    #  #      #_#_#  #    #  # -##  # -##  #      # -## ");
+		printSW("\t     #__#   #____  #- -#   #__#   #   #  #   #  #____  #   # ");
 	}
 	printf("\n\tGewonnen mit %d falschen Tipps, gesuchtes Wort war:\n\t\"%s\".\n\n", Fehler, Wort);
 	teilGalgen(Fehler);
@@ -86,11 +85,11 @@ void DispVerloren(int Fehler ,char *Wort,int d){
 	// Bildschirm "Verloren"
 	if(d!=1){ 
 		teilTitel(d);
-		printSW("\t#   #                                                       ");
-		printSW("\t#   #  #----  #---#   #       #--#   #---#   #----  #   # ");
-		printSW("\t#   #  #___   #    #  #      #    #  #    #  #___   ##_ # ");
-		printSW("\t # #   #      #---#   #      #    #  #---#   #---   # -## ");
-		printSW("\t  #    #____  #    #  #____   #__#   #    #  #____  #   # ");
+		printSW("\t    #   #                                                       ");
+		printSW("\t    #   #  #----  #---#   #       #--#   #---#   #----  #   # ");
+		printSW("\t    #   #  #___   #    #  #      #    #  #    #  #___   ##_ # ");
+		printSW("\t     # #   #      #---#   #      #    #  #---#   #---   # -## ");
+		printSW("\t      #    #____  #    #  #____   #__#   #    #  #____  #   # ");
 	}
 	printf("\n\tVerloren mit %d falschen Tipps, gesuchtes Wort war:\n\t\"%s\".\n\n", Fehler, Wort);
 	teilGalgen(Fehler);

@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-//#include <string.h>
 #include <conio.h>
 #include <string.h>
 
@@ -36,11 +35,11 @@ char Taste(int d) {
 	// Fängt einen Tastendruck ab und gibt das passende Zeichen zurück
 	char key=0;
 	while (key == 0) {
-		_sleep(100);
-		key =  kbhit();
+		_sleep(10);				// verringert die Schleifengeschwindgikeit und damit Prozessorauslastung
+		key =  _kbhit();
 	}
 	key = getch();
-	if (key == -32 || key == 0) key = getch();		// Umgehung für Sondertasten
+	if (key == -32 || key == 0) key = _getch();		// Umgehung für Sondertasten
 	if(d)printf("\nDebug: Taste: %d", key);
 	return key;
 }
