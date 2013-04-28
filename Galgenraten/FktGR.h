@@ -1,16 +1,15 @@
-#ifndef FktGR // Präprozessoranweisung
+#ifndef FktGR // PrÃ¤prozessoranweisung
 #define FktGR
 
-struct TProtokoll neuGalgen(struct wort *Wortliste, struct TProtokoll *Protokoll, int GrossKlein, int WortNummer, int debug);	// einen neuen Rateversuch starten
-struct wort eigeneWortliste(int debug);				// laden einer eigenen Wortliste (Ratewörtern), gibt diese zurück
-struct WProtokoll eigenesWProtokoll(int d);			// laden eines eigenen Protokolls, gibt dieses zurück
-void eignesSpeicherzielWProtokoll(struct WProtokoll *WortProtokoll, int debug);  // Speichern eines WortProtokolls mit wählbarem Dateiname
+struct wort eigeneWortliste(int debug);		// einlesen einer eigenen Wortliste, gibt diese zurÃ¼ck
+struct WProtokoll eigenesWProtokoll(int debug);	// laden eines eigenen Protokolls, gibt dieses zurÃ¼ck
+void eignesSpeicherzielWProtokoll(struct WProtokoll *WortProtokoll, int debug);	// Speichern eines WortProtokolls mit wÃ¤hlbarem Dateiname
 
-int Wortauswahl(struct WProtokoll *WPr, int d);	// Anzeige der interaktiven Wortauswahlliste, gibt die Laufende Nummer des Worts zurück, 0 für nicht gefunden, -1 für Abbruch
-void anzeigenWoerter(struct WProtokoll *WortProtokoll, int debug);		// gibt alle bisher im Protokoll enthaltenen Wörter aus
-void anzeigenTippVerlauf(struct WProtokoll *WortProtokoll, int debug);	// gibt einen Rateverlauf für ein aus dem WPr wählbares Wort aus
-void abspielenTippVerlauf(struct TProtokoll *TippProtokoll, int debug);  // Zeigt den TippVerlauf eines Wortes (TPr)
-struct WProtokoll loeschenTippVerlauf(struct WProtokoll *WortProtokoll, int debug); // löscht einen TippVerlauf, gibt Liste zurück
+struct TProtokoll neuGalgen(struct wort *Wortliste, struct TProtokoll *TippProtokoll, int GrossKlein, int Nummer, int debug); // ein neues Spiel starten
+void anzeigenWoerter(struct WProtokoll *WortProtokoll, int debug);				// Anzeigen aller geratenen WÃ¶rter
+void anzeigenTippVerlauf(struct WProtokoll *WortProtokoll, int debug);			// Anzeigen des Rateverlaufs fÃ¼r ein Wort
+struct WProtokoll loeschenTippVerlauf(struct WProtokoll *WortProtokoll, int debug);	// LÃ¶schen eines Rateverlaufs
+
+int Wortauswahl(struct WProtokoll *WortProtokoll, int debug);					// Auswahldialog fÃ¼r ein Wort im WortProtokoll
 
 #endif
-

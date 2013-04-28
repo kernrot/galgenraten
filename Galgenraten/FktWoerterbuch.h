@@ -1,21 +1,23 @@
-#ifndef FktWoerterbuch // Präprozessoranweisung
+#ifndef FktWoerterbuch // PrÃ¤prozessoranweisung
 #define FktWoerterbuch
 
+#include <stdio.h>
+
 // ''''''''''''''''''''''''''''''''''''''
-// Funktionen zur Wortliste für die Ratewörter
+// Funktionen zur Wortliste fÃ¼r die RatewÃ¶rter
 // ''''''''''''''''''''''''''''''''''''''
 
 struct wort {
 	char Zeichen[28];		// der Text des Worts
-	struct wort *next;		// das nächste Wort
+	struct wort *next;		// das nÃ¤chste Wort
 };
 
-struct wort readWoerter(char* pfad, int debug);			// Wörter aus einer Datei (pfad) einlesen
-void hinzuWort(struct wort **Wortliste, char Zeichen[28]);	// Wort zur Wortliste hinzufügen
-void printWoerter(struct wort *Wortliste);						// Ausgabe aller Wörter einer Wortliste
-int anzWoerter(struct wort *Wortliste);							// Rückgabe der Wortanzahl einer Wortliste
+struct wort readWoerter(char* pfad, int debug);			// WÃ¶rter aus einer Datei (pfad) einlesen
+void hinzuWort(struct wort **Wortliste, char Zeichen[28]);	// Wort zur Wortliste hinzufÃ¼gen
+void printWoerter(struct wort *Wortliste);				// Ausgabe aller WÃ¶rter einer Wortliste
+int anzWoerter(struct wort *Wortliste);					// RÃ¼ckgabe der Wortanzahl einer Wortliste
 
-
-char ansi2ascii(char ansi);								// Zeichensatz von Ansi (txt) nach Ascii (für Umlaute)
+char ansi2ascii(char ansi);								// Zeichensatz von Ansi (txt) nach Ascii (fÃ¼r Umlaute)
+int readCharFromFile(FILE *datei);						// Liest Zeichen und dekodiert UTF-8 / ANSI Umlaute
 
 #endif

@@ -1,50 +1,49 @@
-#ifndef FktProtokoll // Präprozessoranweisung
+#ifndef FktProtokoll // PrÃ¤prozessoranweisung
 #define FktProtokoll
 
 // ''''''''''''''''''''''''''''''''''''''
-// Funktionen für die Protokollliste
+// Funktionen fÃ¼r die Protokollliste
 // ''''''''''''''''''''''''''''''''''''''
 
-struct TProtokoll {		// TippProtkoll
-	int Nummer;						// Laufende Nummer eines geratenen Wortes  negative Nummer: Groß/Kleinschreibung beachten 
+struct TProtokoll {		// TippProtokoll
+	int Nummer;						// Laufende Nummer eines geratenen Wortes, negative Nummer: GroÃŸ/Kleinschreibung beachten 
 	char Suchwort[28];				// Das zu ratende Wort
 	char Eingabe[28];				// Eingegebene Buchstabe
 	struct TProtokoll *prev;		// Pointer vorheriges Element
-	struct TProtokoll *next;		// Pointer nächstes Element
+	struct TProtokoll *next;		// Pointer nÃ¤chstes Element
 };
 
-struct TProtokoll hinzuTProtokoll(struct TProtokoll **TippProtokoll, int Nummer, char Suchwort[28], char Eingabe[28], int debug);	// Fügt einen Protokolleintrag hinzu
-struct TProtokoll entferneTProtokoll(struct TProtokoll **TippProtokoll, int debug);	// entfernt das letzte Element aus der Liste, gibt Liste zurück
+struct TProtokoll hinzuTProtokoll(struct TProtokoll **TippProtokoll, int Nummer, char Suchwort[28], char Eingabe[28], int debug);	// FÃ¼gt einen Protokolleintrag hinzu
+struct TProtokoll entferneTProtokoll(struct TProtokoll **TippProtokoll, int debug);	// entfernt das letzte Element aus der Liste, gibt Liste zurÃ¼ck
 
-int anzTProtokollTipps(struct TProtokoll **TippProtokoll, int debug);				// gibt die Anzahl an Tipps zurück
+int anzTProtokollTipps(struct TProtokoll **TippProtokoll, int debug);				// gibt die Anzahl an Tipps zurÃ¼ck
 
-void printTProtokoll(struct TProtokoll **TippProtokoll, int debug);					// print für ein TippProtokoll
+void printTProtokoll(struct TProtokoll **TippProtokoll, int debug);					// print fÃ¼r ein TippProtokoll
 
 
 
 // ''''''''''''''''''''''''''''''''''''''
-// Funktionen für die WortProtokollliste
+// Funktionen fÃ¼r die WortProtokollliste
 // ''''''''''''''''''''''''''''''''''''''
 
-struct WProtokoll {		// WortProtkoll
+struct WProtokoll {		// WortProtokoll
 	int Nummer;						// Laufende Nummer 
 	struct TProtokoll *TippProtokoll;	// Pointer zum TippProtokoll
 	struct WProtokoll *prev;		// Pointer vorheriges Element
-	struct WProtokoll *next;		// Pointer nächstes Element
+	struct WProtokoll *next;		// Pointer nÃ¤chstes Element
 };
 
-struct WProtokoll hinzuWProtokoll(struct WProtokoll **WoerterProtokoll, struct TProtokoll **anzuhängendesTippProtokoll, int debug);	// ein TippProtokoll zum WortProtokoll hinzufügen, gibt das hinzugefügte zurück
-struct WProtokoll entferneWProtokoll(struct WProtokoll **WoerterProtokoll, int debug);		// entfernt das letzte Element aus der Liste gibt Liste zurück
-struct WProtokoll entferneWProtokollNummer(struct WProtokoll **WoerterProtokoll, int Nummer, int debug);		// entfernt das Element mit der entsp. Nummer aus der Liste gibt Liste zurück
-struct WProtokoll lesenWProtokoll(char* pfad, int debug);									// WProtokoll aus binärdatei lesen
-struct WProtokoll letztesWProtokoll(struct WProtokoll **WPr, int d);							// gibt das letzte Element des WProtokolls zurück
+struct WProtokoll hinzuWProtokoll(struct WProtokoll **WoerterProtokoll, struct TProtokoll **anzuhaengendesTippProtokoll, int debug);	// ein TippProtokoll zum WortProtokoll hinzufÃ¼gen, gibt das hinzugefÃ¼gte zurÃ¼ck
+struct WProtokoll entferneWProtokoll(struct WProtokoll **WoerterProtokoll, int debug);		// entfernt das letzte Element aus der Liste gibt Liste zurÃ¼ck
+struct WProtokoll entferneWProtokollNummer(struct WProtokoll **WoerterProtokoll, int Nummer, int debug);		// entfernt das Element mit der entsp. Nummer aus der Liste gibt Liste zurÃ¼ck
+struct WProtokoll lesenWProtokoll(char* pfad, int debug);									// WProtokoll aus BinÃ¤rdatei lesen
+struct WProtokoll letztesWProtokoll(struct WProtokoll **WPr, int d);						// gibt das letzte Element des WProtokolls zurÃ¼ck
 
-int OLDanzWProtokoll(struct WProtokoll **lst, int debug);										// Anzahl der TippProtokolle in einem WortProtokoll
-int isInWProtokoll(struct WProtokoll **lst, int num, int d);								// prüft ob TippProtokoll mit laufender Nummer im Wortprotokoll vorhanden ist, return 1 für vorhanden, 0 für nicht
+int OLDanzWProtokoll(struct WProtokoll **lst, int debug);									// Anzahl der TippProtokolle in einem WortProtokoll
+int isInWProtokoll(struct WProtokoll **lst, int num, int d);								// prÃ¼ft ob TippProtokoll mit laufender Nummer im Wortprotokoll vorhanden ist, return 1 fÃ¼r vorhanden, 0 fÃ¼r nicht
 
-void speichernWProtokoll(struct WProtokoll **s, char* pfad, int debug);						// WProtokoll nach pfad binär speichern
-void printWProtokoll(struct WProtokoll **WortProtokoll, int debug);							// printTProtokoll für alle TippProtokolle in einem WortProtokoll
+void speichernWProtokoll(struct WProtokoll **s, char* pfad, int debug);						// WProtokoll nach pfad binÃ¤r speichern
+void printWProtokoll(struct WProtokoll **WortProtokoll, int debug);							// printTProtokoll fÃ¼r alle TippProtokolle in einem WortProtokoll
 void printWProtokollEinzelwoerter(struct WProtokoll **WortProtokoll, int numMarkiert, int debug);			// alle TippProtokolle in einem WortProtokoll auflisten, mit optionalem Marker auf Wort->WortNummer
-
 
 #endif

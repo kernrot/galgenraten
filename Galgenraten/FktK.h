@@ -1,30 +1,29 @@
-#ifndef FktK // Präprozessoranweisung
+#ifndef FktK // PrÃ¤prozessoranweisung
 #define FktK
 
 // ''''''''''''''''''''''''''''''''''''''
-// Allgemein nützlich Funktionen
+// Allgemein nÃ¼tzliche Funktionen
 // ''''''''''''''''''''''''''''''''''''''
 
-int char2intZahlenTasten(char c);	// zu einer Zahlentaste das entsprechende int zurückgeben
-int intPositiv (int Zahl);	// Integer postiv machen
-int Zufall(int max);	// Zufallszahl zwischen 0 und max
-char Taste(int debug);	// Gibt Tastendruck zurück							
-char* charsKlein(char *Zeichen);	// gibt einen Buchstaben kleingeschrieben zurück
-char* charsGK(char *Zeichen, int klein);	// wie oben, jedoch nur bei klein = 1
-int checkPfad(char* Pfad);	//Prüft eine Zeichenkette (Dateiname) auf Sonderzeichen, return 0 wenn Sonderzeichen enthalten.
+int char2intZahlenTasten(char c);	// zu einer Zahlentaste das entsprechende int zurÃ¼ckgeben
+int intPositiv (int Zahl);			// Integer positiv machen
+int Zufall(int max);				// Zufallszahl zwischen 0 und max
+char Taste(int debug);				// Gibt Tastendruck zurÃ¼ck							
+char* charsKlein(char *Zeichen);	// gibt einen Buchstaben kleingeschrieben zurÃ¼ck
+char* charsGK(char *Zeichen, int klein); // wie oben, jedoch nur bei klein = 1
+int checkPfad(char* Pfad);			// PrÃ¼ft eine Zeichenkette (Dateiname) auf Sonderzeichen, return 0 wenn Sonderzeichen enthalten.
 
 // ''''''''''''''''''''''''''''''''''''''
 // Funktionen zur Zeichenkettenverarbeitung
 // ''''''''''''''''''''''''''''''''''''''
 
-int lenWort(char*Zeichenkette);	// Wortlänge
-int vorhandeneZeichen(char *suchZeichen, char *Zeichenkette);	// Testet ob Zeichen in Zeichenkette vorhanden sind, return Anzahl
-int fehlendeZeichen(char *Wort, char *Zeichen);	// Prüft wie viele Zeichen in Wort und nicht in Zeichen enthalten sind.
-int unbenutzteZeichen(char *Wort, char *Zeichen);	// Prüft wie viele Zeichen aus Zeichen nicht in Wort enthalten sind.
+int lenWort(char* Zeichenkette);	// WortlÃ¤nge
+int vorhandeneZeichen(char *suchZeichen, char *Zeichenkette); // Testet ob Zeichen in Zeichenkette vorhanden sind, return Anzahl
+int fehlendeZeichen(char *Wort, char *Zeichen); // PrÃ¼ft wie viele Zeichen in Wort und nicht in Zeichen enthalten sind.
+int unbenutzteZeichen(char *Wort, char *Zeichen); // PrÃ¼ft wie viele Zeichen aus Zeichen nicht in Wort enthalten sind.
 
 // Ascii-Art Zeug
-void printSW(char line[80]);	// Zeichenfunktion für einfache Bildschirmgrafik mit #-_ als ausgefüllte Blöcke
-void printUeberschrift(char* Text);	// Schreibt Text mit Rahmen als Überschrift
+void printSW(char line[80]);		// Zeichenfunktion fÃ¼r einfache Bildschirmgrafik mit #-_ als ausgefÃ¼llte BlÃ¶cke
+void printUeberschrift(char* Text); // Schreibt Text mit Rahmen als Ãœberschrift
 
 #endif
-

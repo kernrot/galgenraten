@@ -2,9 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "FktDisp.h"	//Bildschirmanzeigen für Galgenraten
-#include "FktGR.h"		//Funktionen für Galgenraten
-#include "FktK.h"		//allgemeine Funktionen
+#include "FktDisp.h"	// Bildschirmanzeigen fÃ¼r Galgenraten
+#include "FktGR.h"		// Funktionen fÃ¼r Galgenraten
+#include "FktK.h"		// allgemeine Funktionen
 #include "FktProtokoll.h"
 #include "FktWoerterbuch.h"
 
@@ -14,23 +14,23 @@ struct TProtokoll neuGalgen(struct wort *Wortliste, struct TProtokoll *Pr, int G
 	char Eingabe[28] = {};
 
 	if(d)printf("Debug: Spiel startet.\n");
-	char tmpTaste[2] = {};				// Nutzereingabe als Zeichenkette für einfache Handhabung von strcat
+	char tmpTaste[2] = {};				// Nutzereingabe als Zeichenkette fÃ¼r einfache Handhabung von strcat
 	int Fehler = 0;						// gemachte Fehler
 
 	// ''''''''''''''''''''''''''''''''''''''
-	// Ratewort Auswählen 
+	// Ratewort AuswÃ¤hlen 
 	// ''''''''''''''''''''''''''''''''''''''
 
 	if(d)printf("Debug: Woerter in der Liste: %d\n", anzWoerter(Wortliste));
 
 	struct wort *zWort;
 	zWort = Wortliste;
-	int znum = Zufall(anzWoerter(Wortliste)-1); // Zufallszahl zwischen 0 und Anzahl der Wörter in Liste (-1)
+	int znum = Zufall(anzWoerter(Wortliste)-1); // Zufallszahl zwischen 0 und Anzahl der WÃ¶rter in Liste (-1)
 
-	for (int i=0; i<znum; i++)	{				// Zufälliges Wort aus der Wortliste wählen
+	for (int i=0; i<znum; i++)	{				// ZufÃ¤lliges Wort aus der Wortliste wÃ¤hlen
 		zWort=zWort->next;
 	}
-	strcpy(Suchwort, zWort->Zeichen);			// gewähltes Wort nach Suchwort
+	strcpy(Suchwort, zWort->Zeichen);			// gewÃ¤hltes Wort nach Suchwort
 	if(d)printf("Debug: Zufaellig gewaehltes Wort %d: %s\n", znum, Suchwort);
 
 	// ''''''''''''''''''''''''''''''''''''''
@@ -38,186 +38,146 @@ struct TProtokoll neuGalgen(struct wort *Wortliste, struct TProtokoll *Pr, int G
 	// ''''''''''''''''''''''''''''''''''''''
 
 	while ((Fehler<10)	// Fehler kleiner 10
-		&& ((fehlendeZeichen(charsGK(Suchwort,Gk), charsGK(Eingabe,Gk)) > 0 ) || (lenWort(Eingabe) == 0)))				// Nich alle Zeichen erraten, oder keine bisher Eingegeben
-	{
-		if(d)printf("Debug: Zufaellig gewaehltes Wort: %s\nDebug: Eingabe bisher: %s\nDebug: Fehler bisher: %d\n", Suchwort, Eingabe, Fehler);
-		
-		DispRaten(Fehler, Suchwort, Eingabe, d);				//Ratebildschirm zeichen
-		tmpTaste[0] = Taste(d);									// Nutzereingabe als erstes Zeichen der Zeichenkette
+		&& ((fehlendeZeichen(charsGK(Suchwort,Gk), Eingabe)) != 0) // und noch Zeichen zu raten
+		&& (tmpTaste[0] != 27)) {								// und nicht Esc gedrÃ¼ckt
 
-		// ''''''''''''''''''''''''''''''''''''''
+			DispRaten(Fehler, Suchwort, Eingabe, d);			// Ratebildschirm zeichnen
+			tmpTaste[0] = Taste(d); tmpTaste[1] = '\0'; charsGK(tmpTaste, Gk);					// Tastendruck abfangen
 
-		if (tmpTaste[0] == 60) {
-			// eine Eingabe Löschen (Taste "<" = 60)
-			if (lenWort(Eingabe) != 0) {						// falls mindestens ein Buchstabe geraten
-				Eingabe[lenWort(Eingabe)-1] = '\0';				// letzten Buchstaben in Eingabe entfernen
-				entferneTProtokoll(&Pr,d);						// letzten TippProtokolleintrag entfernen
-			}else{
-				Pr->Nummer = 0;									// falls kein Buchstabe bisher geraten -> Ende und TippProtokoll mit Nr. 0 als leer kennzeichnen
-				return *Pr;
+			if (tmpTaste[0] != 27) {							// wenn nicht Esc gedrÃ¼ckt wurde
+				if (vorhandeneZeichen(tmpTaste, charsGK(Suchwort,Gk)) == 0){ // war das geratene Zeichen im Wort vorhanden
+					Fehler++;
+				}
+				strcat(Eingabe, tmpTaste);					// anhÃ¤ngen an Eingabe
+				hinzuTProtokoll(&Pr, Nummer*Gk, Suchwort, Eingabe, d); // Tipp zum Tippprotokoll hinzufÃ¼gen
 			}
-		} else {
-			// ein Buchstabe geraten
-			if (vorhandeneZeichen(Eingabe, tmpTaste) == 0) {	// falls Buchstabe tmpTaste noch nicht in Eingabe
-				strcat_s(Eingabe, tmpTaste);					// anhängen an Eingabe
-				hinzuTProtokoll(&Pr,Gk*Nummer,zWort->Zeichen,tmpTaste,d);	// TippProtokoll hinzufügen
-			} 
-		}
-		// wenn tmpTaste noch nicht in Eingabe
-		Fehler = unbenutzteZeichen(Suchwort, Eingabe);
 	}
 
 	// ''''''''''''''''''''''''''''''''''''''
-	// Raten beendet
+	// Auswertung
 	// ''''''''''''''''''''''''''''''''''''''
 
-	if (Fehler < 10) {
-		DispGewonnen(Fehler,Suchwort, d);						// Gewonnen wenn weniger als 10 Fehler
+	if (Fehler == 10){
+		DispVerloren(Suchwort, d);
 		printf("\n\t(Enter) zum Hauptmenu zur\201ck zu kehren\n\t(Leertaste) ein weiteres Wort raten");
-	} else {
-		DispVerloren(Fehler,Suchwort, d);
+	} else if(tmpTaste[0] != 27) {
+		DispGewonnen(Suchwort, d);
 		printf("\n\t(Enter) zum Hauptmenu zur\201ck zu kehren\n\t(Leertaste) ein weiteres Wort raten");
 	}
+
 	return *Pr;
 }
 
-
 void anzeigenWoerter(struct WProtokoll *WPr, int d){
-	// gibt alle bisher im Protokoll enthaltenen Wörter aus
+	// Anzeigen aller im Protokoll vorhandenen WÃ¶rter
 	teilTitel(d);
-	printUeberschrift("Anzeigen aller im Protokoll vorhandenen W\224erter");
-	printWProtokoll(&WPr,d);		// Alle Wörter ausgeben
+	printUeberschrift((char*)"Anzeigen aller im Protokoll vorhandenen W\224erter");
+	printWProtokollEinzelwoerter(&WPr, 0, d);
+	Taste(d);
+	return;
 }
-
 
 int Wortauswahl(struct WProtokoll *WPr, int d){
-	// Anzeige der interaktiven Wortauswahlliste, gibt die Laufende Nummer des Worts zurück, 0 für nicht gefunden, -1 für Abbruch
-	int WortNummer, firstWortNummer, lastWortNummer;
+	// Listet alle WÃ¶rter auf und gibt die Nummer des mit Pfeiltasten gewÃ¤hlten Wortes zurÃ¼ck
+	int lastWortNummer = 0;
+	lastWortNummer = intPositiv((letztesWProtokoll(&WPr,d)).Nummer); // Indexnummer des letzten elements bestimmen
+	int Wahl = 1;
+	char TasteWahl = ' ';
 
-	WortNummer = firstWortNummer = intPositiv(WPr->TippProtokoll->Nummer);	// Indexnummer des ersten elements bestimmen
-	lastWortNummer = intPositiv((&letztesWProtokoll(&WPr,d))->Nummer);								// Indexnummer des letzten elements bestimmen
-
-	int tmpTaste = 0;
-
-	while (tmpTaste != '\r'){				// bis mit Enter bestätigt
+	while (TasteWahl != 13 && TasteWahl != 27){
 		teilTitel(d);
-		printUeberschrift("Rateverlauf anzeigen");
+		printUeberschrift((char*)"Rateverlauf anzeigen");
 		printf("\tWort f\201r Rateverlauf ausw\204hlen:\n\n");
-
-		printWProtokollEinzelwoerter(&WPr, WortNummer, d);	// Liste der Wörter mit Marker auf WortNummer
+		printWProtokollEinzelwoerter(&WPr, Wahl, d);
+		if(d)printf("Debug: Ausgewaehltes Wort: %d\n", Wahl);
 		printf("\n\t(oben/unten)\tPfeiltasten Wort ausw\204hlen\n\t(Enter)\tRateverlauf f\201r Wort anzeigen\t(Esc)\tAbbrechen\n");
-		tmpTaste = Taste(d);
 
-		if (tmpTaste == 27) return -1;	// vorgang abbrechen
+		TasteWahl = Taste(d);
 
-		if (tmpTaste == 72 && WortNummer > firstWortNummer) { // Pfeiltaste nach oben
-			WortNummer--;
-			while (isInWProtokoll(&WPr,WortNummer,d) == 0){
-				WortNummer--;		// Index für das nächste setzen (relevant element gelöscht)
-			}
-			if(d)printf("Debug: nach oben\n"); 
-		}		
+		switch (TasteWahl){
+		case 80:	// Pfeiltaste unten
+			do{
+				Wahl++;
+				if (Wahl > lastWortNummer) {
+					Wahl = 1;
+				}
+			}while((isInWProtokoll(&WPr, Wahl, d) != 1) && (isInWProtokoll(&WPr, Wahl*-1, d) != 1));
+			break;
 
-		if (tmpTaste == 80 && WortNummer < lastWortNummer) { // unten
-			WortNummer++;
-			while (isInWProtokoll(&WPr,WortNummer,d) == 0){
-				WortNummer++;		// Index für das vorherige setzen (relevant element gelöscht)
-			}
-			if(d)printf("Debug: nach unten\n"); 
-		}	
+		case 72:	// Pfeiltaste oben
+			do{
+				Wahl--;
+				if (Wahl < 1) {
+					Wahl = lastWortNummer;
+				}
+			}while((isInWProtokoll(&WPr, Wahl, d) != 1) && (isInWProtokoll(&WPr, Wahl*-1, d) != 1));
+			break;
+
+		default: break;
+		}
+
 	}
-	return WortNummer;
+	if(TasteWahl == 27) Wahl = 0;
+	return Wahl;
 }
-
-
 
 void anzeigenTippVerlauf(struct WProtokoll *WPr, int d){
-	// lässt den Anwender ein Wort aus dem WPr auswählen und zeigt dann den Tippverlauf für dieses
-	
-	int WortNummer=Wortauswahl(WPr, d); //Wort auswählen lassen
+	// Zeigt den Rateverlauf eines Wortes Schritt fÃ¼r Schritt an
+	int wahl = Wortauswahl(WPr, d);
+	if (wahl == 0) return;
 
-	//WortNummer = char2intZahlenTasten(Taste(d));  // alte Wortauswahl
+	struct WProtokoll *lauf = WPr;
 
-	if (WortNummer>0){
-		struct WProtokoll *lauf = WPr;
-		while(lauf->next != NULL && intPositiv(lauf->Nummer) != WortNummer){ // Wort mit passender Nummer suchen
-			lauf=lauf->next;
-		}
-		if(d)printf("Debug: Wort Nummer %d gefunden.",WortNummer);
-		if (lauf->Nummer != 0) abspielenTippVerlauf(lauf->TippProtokoll,d);  //Wort zu Nummer gesucht, Verlaufsanzeige aufrufen
-	}else{
-		if(WortNummer != -1){	//Falls auswahl nicht abgebrochen
-			printf("\n\tWort nicht gefunden.");
-			Taste(d);
-		}
+	while((lauf->Nummer != wahl) && (lauf->Nummer != wahl*-1) && (lauf->next != NULL)){ // zu wahl entsprechendem Wortprotokollelement laufen
+		lauf=lauf->next;
 	}
 
+	struct TProtokoll *Tlauf = lauf->TippProtokoll; // Startelement Tippprotokoll
+
+	int fehler = 0;
+	int weiter = 1;
+	char eingabe[28]={};
+	char tmptaste[2]={};
+
+	while(weiter == 1){
+
+		if (Tlauf != NULL){
+			fehler = unbenutzteZeichen(Tlauf->Suchwort, Tlauf->Eingabe); // Fehler bestimmen
+			DispRatenVerlauf(fehler, Tlauf->Suchwort, Tlauf->Eingabe, d); // Bildschirm fÃ¼r Verlaufsanzeige zeichnen
+			if(Tlauf->next != NULL) {
+				Tlauf=Tlauf->next;
+			} else {
+				weiter = 0;
+			}
+		}
+
+		if (Taste(d) == 13) weiter = 0; // mit Enter abbrechen
+	}
+
+	// Abschlussbildschirm je nach Ausgang
+	int Gk = -1;
+	if(lauf->Nummer<0){ Gk = 1; } // GroÃŸKlein beachten?
+	if(fehler == 10){
+		DispVerloren(Tlauf->Suchwort, d);
+	} else if (fehlendeZeichen(charsGK(Tlauf->Suchwort,Gk), Tlauf->Eingabe) == 0){
+		DispGewonnen(Tlauf->Suchwort, d);
+	}
+	printf("\n\t(Enter) zum Hauptmenu zur\201ck zu kehren");
+	while(Taste(d) != 13){}
+	return;
 }
 
-
 struct WProtokoll loeschenTippVerlauf(struct WProtokoll *WPr, int d){
-	// löscht einen TippVerlauf, gibt Liste zurück
+	// LÃ¶scht ein Element aus dem Protokoll
+	int wahl = Wortauswahl(WPr, d);
+	if (wahl == 0) return *WPr;
 
-	int WortNummer=Wortauswahl(WPr, d); //Wort auswählen lassen
-
-	//WortNummer = char2intZahlenTasten(Taste(d));  // alte Wortauswahl
-
-	if (WortNummer>0){
-		struct WProtokoll *lauf = WPr;
-		while(lauf->next != NULL && intPositiv(lauf->Nummer) != WortNummer){ // Wort mit passender Nummer suchen
-			lauf=lauf->next;
-		}
-		if(d)printf("Debug: Wort Nummer %d gefunden.",WortNummer);
-
-		if (lauf->Nummer != 0) {
-			*WPr = entferneWProtokollNummer(&WPr,WortNummer,d);		// Entfernt das gewählte Element
-		}
-	}else{
-		if(WortNummer != -1){	//Falls auswahl nicht abgebrochen
-			printf("\n\tWort nicht gefunden.");
-			Taste(d);
-		}
-	}
+	entferneWProtokollNummer(&WPr, wahl, d);
 	return *WPr;
 }
 
-
-void abspielenTippVerlauf(struct TProtokoll *TPr, int d){
-	// Zeigt den TippVerlauf eines Wortes (TPr)
-	struct TProtokoll *lauf = TPr;						// Startelement der Liste
-	char Eingabe[28] = {};
-	char Suchwort[28] = {};
-	int Fehler = 0;
-	int Gk=0;
-
-	if (lauf->next != NULL){						// falls wort nicht leer
-		if(lauf->Nummer<0){	Gk = 1; }				// GroßKlein beachten?
-		strcpy(Suchwort,lauf->Suchwort);			// Suchwort aus dem Tippprotokoll kopieren
-		while (lauf->next != NULL) {				// Solange weiterer Tipp im TippProtokoll
-			strcat(Eingabe,lauf->Eingabe);			// Zur Einhabe hinzu
-			DispRatenVerlauf(unbenutzteZeichen(charsGK(Suchwort,Gk), charsGK(Eingabe,Gk)),lauf->Suchwort,Eingabe,d);	// Bildschirm zeichnen
-			lauf = lauf->next;						// zum nächsten buchstaben
-			if (Taste(d) == '\r') {
-				return;
-			}
-		}
-		strcat(Eingabe,lauf->Eingabe);				// letzter Tipp
-		if (unbenutzteZeichen(charsGK(Suchwort,Gk), charsGK(Eingabe,Gk)) < 10 ){	// Gewonnen/Verloren anhand der gemachten Fehler
-			DispGewonnen(unbenutzteZeichen(charsGK(Suchwort,Gk), charsGK(Eingabe,Gk)),Suchwort,d);	// Schlussbildschrim Gewonnen
-		} else {
-			DispVerloren(unbenutzteZeichen(charsGK(Suchwort,Gk), charsGK(Eingabe,Gk)),Suchwort,d);  // Schlussbildschrim Gewonnen
-		}
-		printf("\n\t(Enter) zum Hauptmenu zur\201ck zu kehren");
-		char WahlTaste = 0;
-		while ((WahlTaste != '\r')){	// Mit Enter weiter zum Hauptmenu
-			WahlTaste = Taste(d);
-		}
-	}
-}
-
-
 struct wort eigeneWortliste(int d){
-	// laden einer eigenen Wortliste, gibt diese zurück
+	// einlesen einer eigenen Wortliste, gibt diese zurÃ¼ck
 	char Pfad[256] = {};
 
 	while ((checkPfad(Pfad) == 0) || lenWort(Pfad) == 0){
@@ -231,12 +191,11 @@ struct wort eigeneWortliste(int d){
 		scanf("%s", Pfad);
 	}
 
-	return readWoerter(Pfad, d);
+	return readWoerter(Pfad,d);
 }
 
-
 struct WProtokoll eigenesWProtokoll(int d){
-	// laden eines eigenen Protokolls, gibt dieses zurück
+	// laden eines eigenen Protokolls, gibt dieses zurÃ¼ck
 	char Pfad[256] = {};
 
 	while ((checkPfad(Pfad) == 0) || lenWort(Pfad) == 0){
@@ -253,9 +212,8 @@ struct WProtokoll eigenesWProtokoll(int d){
 	return lesenWProtokoll(Pfad,d);
 }
 
-
 void eignesSpeicherzielWProtokoll(struct WProtokoll *WPr, int d){
-	// Speichern eines WortProtokolls mit wählbarem Dateiname
+	// Speichern eines WortProtokolls mit wÃ¤hlbarem Dateiname
 	char Pfad[256] = {};
 
 	while ((checkPfad(Pfad) == 0) || lenWort(Pfad) == 0){
@@ -265,7 +223,7 @@ void eignesSpeicherzielWProtokoll(struct WProtokoll *WPr, int d){
 			printf("\tBitte eine g\201ltigen Dateinamen eingeben.\n\t(Buchstaben, Punkte, Zahlen)\n\n");
 		}
 
-		printf("\tDateiname: ");
+		printf("\t Dateiname: ");
 		scanf("%s", Pfad);
 	}
 

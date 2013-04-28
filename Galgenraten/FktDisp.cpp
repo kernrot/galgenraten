@@ -5,26 +5,26 @@
 #include "FktK.h"
 
 // ''''''''''''''''''''''''''''''''''''''
-// Alles was auschlieﬂlich zeichnet
+// Alles was ausschlie√ülich zeichnet
 // ''''''''''''''''''''''''''''''''''''''
 
 void DispHauptmenu(int Gk, int d){
-	// Zeigt das Hauptmenu an, Gk f¸r Anzeige der Groﬂ/Kleinschreibung
-	// nicht schˆn im Code aber toll auf dem Bildschirm
+	// Zeigt das Hauptmenu an, Gk f√ºr Anzeige der Gro√ü/Kleinschreibung
+	// nicht sch√∂n im Code aber toll auf dem Bildschirm
 	teilTitel(d);
 
-	printUeberschrift("Hauptmenu");
-	printf("\t(n) Neues Spiel starten.");					nachM();	printSW(" \311\315\315\315\273 ");
-	nachR();															printSW(" \263   \272 ");
-	printf("\t(a) Anzeigen aller geratenen W\224rter.\t\t");			printSW("\134\235\57  \272 ");
-	printf("\t(v) Anzeigen eines Rateverlaufs.\t\t");					printSW(" \333   \272 ");
-	printf("\t(l) L\224schen eines Rateverlaufs.");			nachM();	printSW("\57 \134  \272 ");
-	nachR();															printSW("     \272 ");
-	printf("\t(w) Wortliste einlesen.\t");					nachM();	printSW("     \272 ");
-	printf("\t(p) Protokoll laden.\t");						nachM();	printSW("    \315\312\315");
+	printUeberschrift((char*)"Hauptmenu");
+	printf("\t(n) Neues Spiel starten.");					nachM();	printSW((char*)" \311\315\315\315\273 ");
+	nachR();															printSW((char*)" \263   \272 ");
+	printf("\t(a) Anzeigen aller geratenen W\224rter.\t\t");			printSW((char*)"\134\235\57  \272 ");
+	printf("\t(v) Anzeigen eines Rateverlaufs.\t\t");					printSW((char*)" \333   \272 ");
+	printf("\t(l) L\224schen eines Rateverlaufs.");			nachM();	printSW((char*)"\57 \134  \272 ");
+	nachR();															printSW((char*)"     \272 ");
+	printf("\t(w) Wortliste einlesen.\t");					nachM();	printSW((char*)"     \272 ");
+	printf("\t(p) Protokoll laden.\t");						nachM();	printSW((char*)"    \315\312\315");
 	printf("\t(s) Protokoll speichern unter..\n\n");
 	printf("\t(g) Gro\341/Kleinschreibung ");
-	if(Gk==1) { printf("[Aus]\n\n"); } if(Gk==-1) { printf("[Ein]\n\n"); } // Groﬂ-/Kleinanzeige
+	if(Gk==1) { printf("[Aus]\n\n"); } if(Gk==-1) { printf("[Ein]\n\n"); } // Gro√ü-/Kleinanzeige
 	printf("\t(b) Beenden.\n");	
 	printf("\n\n\t(Ausw\204hlen mit Tastendruck)\n");	
 	return;
@@ -33,7 +33,7 @@ void DispHauptmenu(int Gk, int d){
 void DispRaten(int Fehler, char *Wort, char *Zeichen, int d){
 	// Ratebildschirm
 	teilTitel(d);
-	printUeberschrift("Raten");
+	printUeberschrift((char*)"Raten");
 	printf("\tZu erratendes Wort:\n\t");
 	teilWort(Wort, Zeichen);
 	teilGalgen(Fehler);
@@ -47,9 +47,9 @@ void DispRaten(int Fehler, char *Wort, char *Zeichen, int d){
 }
 
 void DispRatenVerlauf(int Fehler, char *Wort, char *Zeichen, int d){
-	// modifizierter Ratebildschirm f¸r Verlaufsanzeige
+	// modifizierter Ratebildschirm f√ºr Verlaufsanzeige
 	teilTitel(d);
-	printUeberschrift("Raterverlauf");
+	printUeberschrift((char*)"Raterverlauf");
 	printf("\t f\201r Wort %s\n\n\t", Wort);
 	teilWort(Wort, Zeichen);
 	teilGalgen(Fehler);
@@ -58,242 +58,209 @@ void DispRatenVerlauf(int Fehler, char *Wort, char *Zeichen, int d){
 		for (int i=0; i<lenWort(Zeichen); i++){ printf("%c",Zeichen[i]); }
 		printf("\n\n\t(beliebige Taste) f\201r n\204chsten Rateschritt\n\t(Enter) zum Hauptmenu");
 	} else {
-		printf("\tgeratene Zeichen: ");
-		for (int i=0; i<lenWort(Zeichen); i++){ printf("%c",Zeichen[i]); }
 		printf("\n\n\t(beliebige Taste) um zum Hauptmenu zur\201ck zu kehren.");
-
 	}
 }
 
-void DispGewonnen(int Fehler ,char *Wort, int d){
+void DispGewonnen(char *Wort, int d){
 	// Bildschirm "Gewonnen"
-	if(d!=1){ 
-		teilTitel(d);
-		printSW("\t     #--_                                                      ");
-		printSW("\t    #       #----  #   #   #--#   #   #  #   #  #----  #   # ");
-		printSW("\t    #  __   #___   #   #  #    #  ##_ #  ##_ #  #___   ##_ # ");
-		printSW("\t    #    #  #      #_#_#  #    #  # -##  # -##  #      # -## ");
-		printSW("\t     #__#   #____  #- -#   #__#   #   #  #   #  #____  #   # ");
-	}
-	printf("\n\tGewonnen mit %d falschen Tipps, gesuchtes Wort war:\n\t\"%s\".\n\n", Fehler, Wort);
-	teilGalgen(Fehler);
-	//printf("\n\t(Enter) zum Hauptmenu zur\201ck zu kehren\n\t(Leertaste) ein weiteres Wort raten");
+	teilTitel(d);
+	printUeberschrift((char*)"GEWONNEN!");
+	printf("\tGl\201ckwunsch!\n\n");
+	printf("\tDas gesuchte Wort war: %s\n\n", Wort);
+	printSW((char*)"\t                     _---_   ");
+	printSW((char*)"\t                    \57     \134 ");
+	printSW((char*)"\t                   | () () | ");
+	printSW((char*)"\t                    \134  ^  \57 ");
+	printSW((char*)"\t                     |||||   ");
+	printSW((char*)"\t                     |||||   ");
 
+	//printf("\n\t(Enter) zum Hauptmenu zur\201ck zu kehren\n\t(Leertaste) ein weiteres Wort raten");
 }
 
-void DispVerloren(int Fehler ,char *Wort,int d){
-	// Bildschirm "Verloren"
-	if(d!=1){ 
-		teilTitel(d);
-		printSW("\t    #   #                                                       ");
-		printSW("\t    #   #  #----  #---#   #       #--#   #---#   #----  #   # ");
-		printSW("\t    #   #  #___   #    #  #      #    #  #    #  #___   ##_ # ");
-		printSW("\t     # #   #      #---#   #      #    #  #---#   #---   # -## ");
-		printSW("\t      #    #____  #    #  #____   #__#   #    #  #____  #   # ");
-	}
-	printf("\n\tVerloren mit %d falschen Tipps, gesuchtes Wort war:\n\t\"%s\".\n\n", Fehler, Wort);
-	teilGalgen(Fehler);
-	//printf("\n\t(Enter) zum Hauptmenu zur\201ck zu kehren\n\t(Leertaste) ein weiteres Wort raten");
+void DispVerloren(char *Wort, int d){
+	// Bildschirm "Gewonnen"
+	teilTitel(d);
+	printUeberschrift((char*)"VERLOREN!");
+	printf("\tSchade!\n\n");
+	printf("\tDas gesuchte Wort war: %s\n\n", Wort);
+	printSW((char*)"\t                    #----#   ");
+	printSW((char*)"\t                    |    |   ");
+	printSW((char*)"\t                    |  _---_ ");
+	printSW((char*)"\t                    | \57     \134");
+	printSW((char*)"\t                    | | () () |");
+	printSW((char*)"\t                    |  \134  ^  \57 ");
+	printSW((char*)"\t                    |   |||||  ");
+	printSW((char*)"\t                    |   |||||  ");
+	printSW((char*)"\t                    |          ");
+	printSW((char*)"\t                 ___|___       ");
 
+	//printf("\n\t(Enter) zum Hauptmenu zur\201ck zu kehren\n\t(Leertaste) ein weiteres Wort raten");
+}
+
+void DispStartbildschirm(){
+	// Bildschirm "Start"
+	teilTitel(0);
+	printf("\n\n\tWillkommen zu\n\n");
+	printSW((char*)"\t #--_                                                      ");
+	printSW((char*)"\t#      _---_ #    #--_ #---- #   # #---_ _---_ --#-- #---- #   #");
+	printSW((char*)"\t#  __  #___# #   #     #___  ##_ # #   # #___#   #   #___  ##_ #");
+	printSW((char*)"\t#    # #   # #   #  -# #     # -## #--#  #   #   #   #     # -##");
+	printSW((char*)"\t #__#  #   # #___ #__# #____ #   # #  -# #   #   #   #____ #   #");
 }
 
 void DispWortlistenEingabe(int d){
-	//Bildschrim f¸r eigene Wortliste
+	// Bildschirm f√ºr eigene Wortliste
 	teilTitel(d);
-	printUeberschrift("eigene Wortliste benutzen");	
-	printf("\tBitte den Dateinamen der eigenen Wortlliste eingeben\n\t(\"*.txt\" mit Enter best‰tigen.)\n\n\n");	
+	printUeberschrift((char*)"eigene Wortliste benutzen");	
+	printf("\tBitte den Dateinamen der eigenen Wortlliste eingeben\n\t(\"*.txt\" mit Enter best\204tigen.)\n\n\n");	
 	return;
 }
 
 void DispProtokollEingabe(int d){
-	//Bildschrim f¸r anderes Protokoll
+	// Bildschirm f√ºr Protokoll laden
 	teilTitel(d);
-	printUeberschrift("ein anderes Protokoll laden");	
-	printf("\tBitte den Dateinamen des Protokolls eingeben\n\t(\"*.log\" mit Enter best‰tigen.)\n\n\n");	
+	printUeberschrift((char*)"Protokoll laden");	
+	printf("\tBitte den Dateinamen des zu ladenden Protokolls eingeben\n\t(Mit Enter best\204tigen.)\n\n\n");	
 	return;
 }
 
 void DispProtokollSpeichern(int d){
-	//Bildschrim f¸r anderes Protokoll
+	// Bildschirm f√ºr Protokoll speichern
 	teilTitel(d);
-	printUeberschrift("Protokoll speichern");	
-	printf("\tBitte den Zieldateinamen des Protokolls eingeben\n\t(\"*.log\" mit Enter best‰tigen.)\n\n\n");	
+	printUeberschrift((char*)"Protokoll speichern");	
+	printf("\tBitte den Dateinamen eingeben unter dem das Protokoll gespeichert werden soll\n\t(Mit Enter best\204tigen.)\n\n\n");	
 	return;
 }
 
+// ''''''''''''''''''''''''''''''''''''''
+// Bildschirmteile
+// ''''''''''''''''''''''''''''''''''''''
+
+void teilTitel(int d){
+	// Schreibt √úberschrift "Galgenraten"
+	system("cls");				//Bildschirm leeren
+	printf("\tGalgenraten\n\n");
+	if(d)printf("Debugmodus Aktiv\n\n");
+}
+
 void teilWort(char *Wort, char *Zeichen){
-	//Gibt die bisher erratenen Zeichen (in Zeichen) des Worts (in Wort) aus
-
-	for (int i=0; i<lenWort(Wort); i++)
-	{
-		int z=0;
-		for (int j=0; j<lenWort(Zeichen); j++)
-		{
-			if (Wort[i] == Zeichen[j]) z=1;
-		}	
-
-		if (z == 1) { 
+	// Gibt das Wort aus, nicht geratene Buchstaben werden mit _ ersetzt
+	for(int i=0; i<lenWort(Wort); i++){
+		if(vorhandeneZeichen(&Wort[i], Zeichen) > 0){
 			printf("%c ", Wort[i]);
 		} else {
 			printf("_ ");
 		}
-
-
 	}
 	printf("\n\n");
 }
 
-
-void teilTitel(int d){
-	//Titelzeile ausgeben
-	//cls();
-	if(d!=1){ 
-		system("CLS");
-		printSW("\t|\t\t   Galgenraten von Conrad Henke\t\t\t|");
-		printSW("\t|\t\t      galgenr\100conradhenke.de\t\t\t|");
-		printSW("\t`~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~¥");
-	}
-}
-
-
-void teilGalgen(int Fehlernummer){
-	// Galgen und M‰nnlein zeichen
-	if (Fehlernummer == 10) {
-		//  Komplett (Fehler 10)
-		nachR(); printSW(" \311\315\315\315\273 ");
-		nachR(); printSW(" \263   \272 ");
-		nachR(); printSW("\134\235\57  \272 ");
-		nachR(); printSW(" \333   \272 ");
-		nachR(); printSW("\57 \134  \272 ");
-		nachR(); printSW("     \272 ");
-		nachR(); printSW("    \315\312\315");
-		nachM(); printf("Vielleicht klappts das n\204chste Mal!\n\n");
-	}
-
-	if (Fehlernummer == 9) {
-		//	Fehler 9
-		nachR(); printSW(" \311\315\315\315\273 ");
-		nachR(); printSW(" \263   \272 ");
-		nachR(); printSW("\134\235\57  \272 ");
-		nachR(); printSW(" \333   \272 ");
-		nachR(); printSW("  \134  \272 ");
-		nachR(); printSW("     \272 ");
-		nachR(); printSW("    \315\312\315");
-		nachM();printf("Noch ein Fehler m\224glich!\n\n");
-	}
-
-	if (Fehlernummer == 8) {
-		//	Fehler 8
-		nachR(); printSW(" \311\315\315\315\273 ");
-		nachR(); printSW(" \263   \272 ");
-		nachR(); printSW("\134\235\57  \272 ");
-		nachR(); printSW(" \333   \272 ");
-		nachR(); printSW("     \272 ");
-		nachR(); printSW("     \272 ");
-		nachR(); printSW("    \315\312\315");
-		nachM(); printf("Fehler 8 von 10\n\n");
-	}
-
-	if (Fehlernummer == 7) {
-		//	Fehler 7
-		nachR(); printSW(" \311\315\315\315\273 ");
-		nachR(); printSW(" \263   \272 ");
-		nachR(); printSW(" \235\57  \272 ");
-		nachR(); printSW(" \333   \272 ");
-		nachR(); printSW("     \272 ");
-		nachR(); printSW("     \272 ");
-		nachR(); printSW("    \315\312\315");
-		nachM(); printf("Fehler 7 von 10\n\n");
-	}
-
-	if (Fehlernummer == 6) {
-		//	Fehler 6
-		nachR(); printSW(" \311\315\315\315\273 ");
-		nachR(); printSW(" \263   \272 ");
-		nachR(); printSW(" \235   \272 ");
-		nachR(); printSW(" \333   \272 ");
-		nachR(); printSW("     \272 ");
-		nachR(); printSW("     \272 ");
-		nachR(); printSW("    \315\312\315");
-		nachM(); printf("Fehler 6 von 10\n\n");
-	}
-
-	if (Fehlernummer == 5) {
-		//	Fehler 5
-		nachR(); printSW(" \311\315\315\315\273 ");
-		nachR(); printSW(" \263   \272 ");
-		nachR(); printSW(" \235   \272 ");
-		nachR(); printSW("     \272 ");
-		nachR(); printSW("     \272 ");
-		nachR(); printSW("     \272 ");
-		nachR(); printSW("    \315\312\315");
-		nachM(); printf("Fehler 5 von 10\n\n");
-	}
-
-	if (Fehlernummer == 4) {
-		//	Fehler 4
-		nachR(); printSW(" \311\315\315\315\273 ");
-		nachR(); printSW(" \263   \272 ");
-		nachR(); printSW("     \272 ");
-		nachR(); printSW("     \272 ");
-		nachR(); printSW("     \272 ");
-		nachR(); printSW("     \272 ");
-		nachR(); printSW("    \315\312\315");
-		nachM(); printf("Fehler 4 von 10\n\n");
-	}
-
-	if (Fehlernummer == 3) {
-		//	Fehler 3
-		nachR(); printSW("   \315\315\273 ");
-		nachR(); printSW("     \272 ");
-		nachR(); printSW("     \272 ");
-		nachR(); printSW("     \272 ");
-		nachR(); printSW("     \272 ");
-		nachR(); printSW("     \272 ");
-		nachR(); printSW("    \315\312\315");
-		nachM(); printf("Fehler 3 von 10\n\n");
-	}
-
-	if (Fehlernummer == 2) {
-		//	Fehler 2
-		nachR(); printSW("       ");
-		nachR(); printSW("       ");
-		nachR(); printSW("       ");
-		nachR(); printSW("     \272 ");
-		nachR(); printSW("     \272 ");
-		nachR(); printSW("     \272 ");
-		nachR(); printSW("    \315\312\315");
-		nachM(); printf("Fehler 2 von 10\n\n");
-	}
-
-	if (Fehlernummer == 1) {
-		//	Fehler 1
-		nachR(); printSW("       ");
-		nachR(); printSW("       ");
-		nachR(); printSW("       ");
-		nachR(); printSW("       ");
-		nachR(); printSW("       ");
-		nachR(); printSW("       ");
-		nachR(); printSW("    \315\312\315");
-		nachM(); printf("Fehler 1 von 10\n\n");
-	}
-
-	if (Fehlernummer == 0) {
-		//	Leer
-		printf("\n\n\n\n\n\n\n");
-		nachM(); printf("Fehler 0 von 10\n\n");
-	}
-
-}
-
-//nach mitte einr¸cken
 void nachM(){
-	printf("\t\t\t");
+	// Bildschirmteil f√ºr Bildschirmausgabe nach Men√º
+	printf("\t\t");
 }
 
-//nach rechts einr¸cken
 void nachR(){
-	printf("\t\t\t\t\t\t\t");
+	// Bildschirmteil f√ºr Bildschirmausgabe nach Raten
+	printf("\t\t\t\t\t\t");
 }
 
-
+void teilGalgen(int f){
+	// Schreibt Galgen entsprechend den gemachten Fehlern (f)
+	switch (f)	{
+	case 9:
+		nachR(); printSW((char*)" \311\315\315\315\273 ");
+		nachR(); printSW((char*)" \263   \272 ");
+		nachR(); printSW((char*)"\134\235\57  \272 ");
+		nachR(); printSW((char*)" \333   \272 ");
+		nachR(); printSW((char*)"\57 \134  \272 ");
+		nachR(); printSW((char*)"     \272 ");
+		nachR(); printSW((char*)"    \315\312\315");
+		nachM(); printf("Vielleicht klappts das n\204chste Mal!\n\n");
+		break;
+	case 8:
+		nachR(); printSW((char*)" \311\315\315\315\273 ");
+		nachR(); printSW((char*)" \263   \272 ");
+		nachR(); printSW((char*)"\134\235\57  \272 ");
+		nachR(); printSW((char*)" \333   \272 ");
+		nachR(); printSW((char*)"  \134  \272 ");
+		nachR(); printSW((char*)"     \272 ");
+		nachR(); printSW((char*)"    \315\312\315");
+		nachM();printf("Noch ein Fehler m\224glich!\n\n");
+		break;
+	case 7:
+		nachR(); printSW((char*)" \311\315\315\315\273 ");
+		nachR(); printSW((char*)" \263   \272 ");
+		nachR(); printSW((char*)"\134\235\57  \272 ");
+		nachR(); printSW((char*)" \333   \272 ");
+		nachR(); printSW((char*)"     \272 ");
+		nachR(); printSW((char*)"     \272 ");
+		nachR(); printSW((char*)"    \315\312\315");
+		break;
+	case 6:
+		nachR(); printSW((char*)" \311\315\315\315\273 ");
+		nachR(); printSW((char*)" \263   \272 ");
+		nachR(); printSW((char*)" \235\57  \272 ");
+		nachR(); printSW((char*)" \333   \272 ");
+		nachR(); printSW((char*)"     \272 ");
+		nachR(); printSW((char*)"     \272 ");
+		nachR(); printSW((char*)"    \315\312\315");
+		break;
+	case 5:
+		nachR(); printSW((char*)" \311\315\315\315\273 ");
+		nachR(); printSW((char*)" \263   \272 ");
+		nachR(); printSW((char*)" \235   \272 ");
+		nachR(); printSW((char*)" \333   \272 ");
+		nachR(); printSW((char*)"     \272 ");
+		nachR(); printSW((char*)"     \272 ");
+		nachR(); printSW((char*)"    \315\312\315");
+		break;
+	case 4:
+		nachR(); printSW((char*)" \311\315\315\315\273 ");
+		nachR(); printSW((char*)" \263   \272 ");
+		nachR(); printSW((char*)" \235   \272 ");
+		nachR(); printSW((char*)"     \272 ");
+		nachR(); printSW((char*)"     \272 ");
+		nachR(); printSW((char*)"     \272 ");
+		nachR(); printSW((char*)"    \315\312\315");
+		break;
+	case 3:
+		nachR(); printSW((char*)" \311\315\315\315\273 ");
+		nachR(); printSW((char*)" \263   \272 ");
+		nachR(); printSW((char*)"     \272 ");
+		nachR(); printSW((char*)"     \272 ");
+		nachR(); printSW((char*)"     \272 ");
+		nachR(); printSW((char*)"     \272 ");
+		nachR(); printSW((char*)"    \315\312\315");
+		break;
+	case 2:
+		nachR(); printSW((char*)"   \315\315\273 ");
+		nachR(); printSW((char*)"     \272 ");
+		nachR(); printSW((char*)"     \272 ");
+		nachR(); printSW((char*)"     \272 ");
+		nachR(); printSW((char*)"     \272 ");
+		nachR(); printSW((char*)"     \272 ");
+		nachR(); printSW((char*)"    \315\312\315");
+		break;
+	case 1:
+		nachR(); printSW((char*)"       ");
+		nachR(); printSW((char*)"       ");
+		nachR(); printSW((char*)"       ");
+		nachR(); printSW((char*)"     \272 ");
+		nachR(); printSW((char*)"     \272 ");
+		nachR(); printSW((char*)"     \272 ");
+		nachR(); printSW((char*)"    \315\312\315");
+		break;
+	case 0:
+		nachR(); printSW((char*)"       ");
+		nachR(); printSW((char*)"       ");
+		nachR(); printSW((char*)"       ");
+		nachR(); printSW((char*)"       ");
+		nachR(); printSW((char*)"       ");
+		nachR(); printSW((char*)"       ");
+		nachR(); printSW((char*)"    \315\312\315");
+		break;
+	}
+	printf("\n\n");
+}
