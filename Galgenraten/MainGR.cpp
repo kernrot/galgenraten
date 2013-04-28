@@ -12,6 +12,8 @@
 
 void main(){
 	
+	DispStartbildschirm();
+
 	time_t t; time(&t); srand((unsigned int)t);	// Zufallsgenerator initialisieren
 	int d = 0;	// Debugausgabe standardmäßig aus
 	//if(d)printf("Debug: Arbeitsverzeichnis ist:\n %s\n\n",_getcwd(NULL,0));
@@ -35,7 +37,7 @@ void main(){
 	if(WortProtokoll == NULL) { printf("Kein Arbeitsspeicher vorhanden.\n"); Taste(d); exit(1);}
 	*WortProtokoll = lesenWProtokoll(NULL,d);
 
-
+	_sleep(2000);
 
 	int GrossKlein = 1;					// Groß/Kleinschreibung 1 für unbeachtet -1 für beachtet
 	int beenden = 0;

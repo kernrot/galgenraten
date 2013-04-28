@@ -97,6 +97,21 @@ void DispVerloren(int Fehler ,char *Wort,int d){
 
 }
 
+void DispStartbildschirm(){
+	// Bildschirm "Gewonnen"
+		teilTitel(0);
+		printf("\n\n\tWillkommen zu\n\n");
+		printSW("\t #--_                                                      ");
+		printSW("\t#      _---_ #    #--_ #---- #   # #---_ _---_ --#-- #---- #   #");
+		printSW("\t#  __  #___# #   #     #___  ##_ # #   # #___#   #   #___  ##_ #");
+		printSW("\t#    # #   # #   #  -# #     # -## #--#  #   #   #   #     # -##");
+		printSW("\t #__#  #   # #___ #__# #____ #   # #  -# #   #   #   #____ #   #");
+
+	//printf("\n\t(Enter) zum Hauptmenu zur\201ck zu kehren\n\t(Leertaste) ein weiteres Wort raten");
+
+}
+
+
 void DispWortlistenEingabe(int d){
 	//Bildschrim für eigene Wortliste
 	teilTitel(d);
